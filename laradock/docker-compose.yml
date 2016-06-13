@@ -1,0 +1,76 @@
+version: '2'
+
+services:
+
+### PHP-FPM Container #######################################
+
+    php-fpm:
+        build:
+            context: ./php-fpm
+            dockerfile: Dockerfile-70
+        volumes_from:
+            - application
+        expose:
+            - "9000"
+        links:
+            - workspace
+
+### Laravel Application Code Container ######################
+
+    application:
+        build: ./application
+        volumes:
+            - ../:/var/www/laravel
+
+### Databases Data Container ################################
+
+    data:
+        build: ./data
+        volumes:
+            - /var/lib/mysql
+            - /var/lib/postgres
+            - /var/lib/mariadb
+            - /var/lib/redis
+            - /var/lib/memcached
+            - /var/lib/neo4j/data
+
+### Nginx Server Container ##################################
+
+    nginx:
+        build: ./nginx
+        volumes_from:
+            - application
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - php-fpm
+
+### MySQL Container #########################################
+
+    mysql:
+        build: ./mysql
+        volumes_from:
+            - data
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: toastmaster
+            MYSQL_USER: homestead
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
+        links:
+            - php-fpm
+
+
+### Workspace Utilities Container ###########################
+
+    workspace:
+        build: ./workspace
+        volumes_from:
+            - application
+        tty: true
+
+### Add more Containers below ###############################
