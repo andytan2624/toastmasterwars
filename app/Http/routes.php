@@ -11,4 +11,9 @@
 |
 */
 
+
 Route::get('/', 'HomeController@index');
+
+//Route::get('/api/flights/{id}', function ($id) {
+//    return App\Flight::findOrFail($id);
+//});

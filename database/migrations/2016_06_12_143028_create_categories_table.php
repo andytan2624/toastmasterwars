@@ -185,6 +185,11 @@ class CreateCategoriesTable extends Migration
 
                     'active' => 1,
                 ),
+                array(
+                    'id'   => 28,
+                    'name' => 'Bring a Friend',
+                    'active' => 1,
+                ),
             )
         );
     }

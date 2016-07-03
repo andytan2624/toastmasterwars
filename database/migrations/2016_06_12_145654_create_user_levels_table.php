@@ -18,6 +18,7 @@ class CreateUserLevelsTable extends Migration
             $table->integer('user_id')->length(10)->unsigned();
             $table->integer('level_id')->length(10)->unsigned();
             $table->integer('period_id')->length(10)->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
 

@@ -18,6 +18,7 @@ class CreatePeriodsTable extends Migration
             $table->date('end')->nullable();
             $table->boolean('active')->default(0);
             $table->string('name',50)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

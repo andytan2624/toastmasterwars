@@ -18,6 +18,7 @@ class CreateLevelsTable extends Migration
             $table->string('name', 100);
             $table->text('description')->nullable();
             $table->integer('points_required')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
 

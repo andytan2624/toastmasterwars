@@ -17,6 +17,7 @@ class CreateExecutiveRoleClubsTable extends Migration
             $table->integer('club_id')->length(10)->unsigned();
             $table->integer('user_id')->length(10)->unsigned();
             $table->integer('executive_role_id')->length(10)->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
 

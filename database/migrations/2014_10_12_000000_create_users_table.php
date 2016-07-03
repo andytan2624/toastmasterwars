@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->date('date_joined')->nullable();
             $table->date('date_left')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

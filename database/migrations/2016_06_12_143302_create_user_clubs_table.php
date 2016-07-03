@@ -20,7 +20,7 @@ class CreateUserClubsTable extends Migration
             $table->boolean('is_member')->default(0);
             $table->date('date_joined')->nullable();
             $table->date('date_left')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
 

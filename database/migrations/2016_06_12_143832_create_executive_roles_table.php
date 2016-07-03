@@ -17,6 +17,7 @@ class CreateExecutiveRolesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

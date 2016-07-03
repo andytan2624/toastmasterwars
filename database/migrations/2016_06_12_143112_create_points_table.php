@@ -18,6 +18,7 @@ class CreatePointsTable extends Migration
             $table->integer('category_id')->length(10)->unsigned();
             $table->date('active_since')->nullable();
             $table->integer('point_value')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -162,6 +163,11 @@ class CreatePointsTable extends Migration
                     'category_id'  => 27,
                     'active_since' => date('Y-m-d'),
                     'point_value'  => - 1,
+                ),
+                array(
+                    'category_id'  => 28,
+                    'active_since' => date('Y-m-d'),
+                    'point_value'  => 5,
                 ),
             )
         );

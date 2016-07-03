@@ -1,6 +1,8 @@
 <?php
 namespace  App\Http\Controllers;
 
+use App\Country;
+
 class HomeController extends Controller {
     public function __construct()
     {
@@ -8,6 +10,8 @@ class HomeController extends Controller {
     }
 
     public function index(){
+        $l = Country::all();
+        var_dump($l);
         return view('home');
     }
 }

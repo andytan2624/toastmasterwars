@@ -25,6 +25,7 @@ class CreateMeetingsTable extends Migration
             $table->text('theme')->nullable();
             $table->text('business_session')->nullable();
             $table->text('notes')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
