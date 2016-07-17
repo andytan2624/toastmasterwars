@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('member_number')->nullable();
             $table->date('date_joined')->nullable();
             $table->date('date_left')->nullable();
+            $table->boolean('is_super_admin')->default(0);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
