@@ -17,6 +17,7 @@ class CreateExecutiveRoleClubsTable extends Migration
             $table->integer('club_id')->length(10)->unsigned();
             $table->integer('user_id')->length(10)->unsigned();
             $table->integer('executive_role_id')->length(10)->unsigned();
+            $table->integer('period_id')->length(10)->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +26,7 @@ class CreateExecutiveRoleClubsTable extends Migration
             $table->foreign('club_id', 'executive_role_clubs_club_id')->references('id')->on('clubs')->onDelete('cascade');
             $table->foreign('user_id', 'executive_role_clubs_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('executive_role_id')->references('id')->on('executive_roles')->onDelete('cascade');
+            $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
         });
     }
 

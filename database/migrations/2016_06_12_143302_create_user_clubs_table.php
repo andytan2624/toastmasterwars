@@ -18,6 +18,7 @@ class CreateUserClubsTable extends Migration
             $table->integer('user_id')->length(10)->unsigned();
             $table->boolean('main_club')->default(0);
             $table->boolean('is_member')->default(0);
+            $table->boolean('is_club_admin')->default(0);
             $table->date('date_joined')->nullable();
             $table->date('date_left')->nullable();
             $table->softDeletes();

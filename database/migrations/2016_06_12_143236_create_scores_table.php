@@ -22,6 +22,7 @@ class CreateScoresTable extends Migration
             $table->boolean('is_speech')->default(0);
             $table->string('speech_title', 150)->nullable();
             $table->integer('evaluator')->length(10)->unsigned()->nullable();
+            $table->integer('created_by')->length(10)->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,6 +33,7 @@ class CreateScoresTable extends Migration
             $table->foreign('meeting_id')->references('id')->on('meetings')->onDelete('cascade');
             $table->foreign('point_id')->references('id')->on('points')->onDelete('cascade');
             $table->foreign('evaluator')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

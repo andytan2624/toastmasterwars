@@ -10,8 +10,6 @@ class HomeController extends Controller {
     }
 
     public function index(){
-        $l = Country::all();
-        var_dump($l);
         return view('home');
     }
 }
