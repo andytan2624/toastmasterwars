@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $user = User::create($input);
 
-        if (isset($input['executive_role_id'])) {
+        if (isset($input['executive_role_id']) && is_int($input['executive_role_id'])) {
             $executive_role_club = new ExecutiveRoleClub();
             $executive_role_club->club_id = $input['club_id'];
             $executive_role_club->user_id = $user->id;
