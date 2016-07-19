@@ -13,7 +13,7 @@ class Score extends Model
     protected $table = 'scores';
 
     protected $fillable = ['user_id', 'club_id', 'meeting_id', 'point_id', 'point_value', 'is_speech',
-    'speech_title', 'evaluator'];
+    'speech_title', 'evaluator', 'notes'];
 
     public function point() {
         return $this->belongsTo('App\Models\Point');

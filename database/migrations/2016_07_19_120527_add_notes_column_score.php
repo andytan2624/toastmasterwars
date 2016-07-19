@@ -13,7 +13,7 @@ class AddNotesColumnScore extends Migration
     public function up()
     {
         Schema::table('scores', function($table) {
-           $table->text('notes');
+           $table->text('notes')->nullable()->after('evaluator');
         });
     }
 

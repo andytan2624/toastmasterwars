@@ -41,6 +41,11 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('notes', 'Notes:') !!}
+        {!! Form::text('notes', old('notes'), ['placeholder' => 'Write a note']) !!}
+    </div>
+
+    <div class="form-group">
         {!! Form::submit('Add Score', ['class' => 'btn btn-primary form-control']) !!}
     </div>
 
