@@ -10,10 +10,22 @@ services:
             dockerfile: Dockerfile-70
         volumes_from:
             - application
+        volumes:
+            - ./logs/php-fpm/:/tmp/xdebug_log
         expose:
             - "9000"
+        ports:
+            - "9001:9001"
         links:
             - workspace
+#        environment:
+#            PHP_IDE_CONFIG: "serverName=dev.app"
+
+#        environment:
+#            XDEBUG_CONFIG: remote_host=172.18.0.2
+#            PHP_IDE_CONFIG: serverName=dev.app
+#        ports:
+#            - "10000:10000"
 
 ### Laravel Application Code Container ######################
 
