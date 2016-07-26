@@ -96,9 +96,9 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Score $score)
     {
-        //
+        return $score;
     }
 
     /**
@@ -109,7 +109,7 @@ class ScoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**

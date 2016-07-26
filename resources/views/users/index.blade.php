@@ -1,11 +1,12 @@
-<!doctype html>
-<html lang="end">
-    <head>
-        <meta charset="UTF-8">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Hello</h1>
-        This is the home page of the temporary site for Toastmaster Wars
-    </body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>This is Kappa Nu</h2>
+                Home of Toastmasters
+            </div>
+        </div>
+    </div>
+@stop

@@ -32,3 +32,11 @@
     {!! Form::label('executive_role_id', 'Executive Role:') !!}
     {!! Form::select('executive_role_id', $executive_roles, old('executive_role_id'), ['placeholder' => 'Pick a role']) !!}
 </div>
+
+@if (count($errors))
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif

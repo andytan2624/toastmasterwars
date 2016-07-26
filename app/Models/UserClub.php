@@ -12,4 +12,5 @@ class UserClub extends Model
     //
     protected $table = 'user_clubs';
 
+    protected $fillable = ['club_id', 'is_member', 'date_joined', 'main_club'];
 }

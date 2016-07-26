@@ -28,4 +28,15 @@ class User extends Authenticatable
     {
         return $this->first_name . " " . $this->last_name;
     }
+
+    public function scores()
+    {
+        // Get all related scores for this user
+        return $this->hasMany(Score::class);
+    }
+
+    public function userClubs()
+    {
+        return $this->hasMany(UserClub::class);
+    }
 }

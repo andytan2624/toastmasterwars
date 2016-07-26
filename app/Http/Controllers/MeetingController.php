@@ -9,10 +9,16 @@ use App\Models\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
+use Mockery\CountValidator\Exception;
 use Request;
 
 class MeetingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +67,22 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $meeting = Meeting::find($id);
+            $statusCode = 200;
+            $response = [
+                'meeting' => [
+                    'id' => (int) $id,
+                ]
+            ];
+        } catch (Exception $e) {
+            $response = [
+                'error' => "File doesn't exists"
+            ];
+            $statusCode = 404;
+        } finally {
+            return Response::json($response, $statusCode);
+        }
     }
 
     /**

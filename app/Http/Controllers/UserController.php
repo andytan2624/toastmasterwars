@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Request;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -39,14 +39,21 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('scores.point.category')->findOrFail($id);
+
+        // Find all scores for that user
 
         return view('users.show', compact('user'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $input = Request::all();
+        $input = $request->all();
+
+        $this->validate($request, [
+            'first_name' => 'required|min:5'
+        ]);
+
 
         $user = User::create($input);
 
@@ -59,19 +66,18 @@ class UserController extends Controller
             $executive_role_club->executive_role_id = $input['executive_role_id'];
             $executive_role_club->period_id = 1;
             $executive_role_club->save();
-            $user_club->is_club_admin = 1;
-        } else {
-            $user_club->is_club_admin = 0;
         }
 
-        $user_club->club_id = $input['club_id'];
-        $user_club->user_id = $user->id;
-        $user_club->is_member = 1;
-        $user_club->main_club = 1;
-        $user_club->date_joined = $input['date_joined'];
-        $user_club->save();
+        $user->userClubs()->save(
+            new UserClub([
+                'club_id' => $input['club_id'],
+                'is_member' => 1,
+                'main_club' => 1,
+                'date_joined' => $input['date_joined'],
+            ])
+        );
 
-        return redirect('users');
+        return redirect('users/create');
     }
 
     public function edit($id)
@@ -83,6 +89,14 @@ class UserController extends Controller
 
 
         return view('users.edit', compact('user', 'clubs', 'executive_roles'));
+    }
+
+    public function update (User $user)
+    {
+
+        $user->update(Request::all());
+
+        return back();
     }
 }
 

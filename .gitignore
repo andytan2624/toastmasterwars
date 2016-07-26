@@ -18,3 +18,7 @@ bootstrap/cache/
 .idea/*
 
 laradock/logs
+
+# Ignore css files
+
+public/css/*
