@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":";;AAAA,IAAA,kBAAA,SAAA,eAAA,CAAA,GAAA;AAAA,SAAA,OAAA,EAAA;AAAA,CAAA;AACA,IAAA,MAAA,KAAA","file":"all.js","sourcesContent":["var isOfDrinkingAge = (age) => age >= 21;\nvar two = 'two';"],"sourceRoot":"/source/"}

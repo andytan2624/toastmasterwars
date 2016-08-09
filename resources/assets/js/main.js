@@ -1,3 +1,2 @@
-/**
- * Created by ash_skywalker10 on 29/07/2016.
- */
+var isOfDrinkingAge = (age) => age >= 21;
+var two = 'two';

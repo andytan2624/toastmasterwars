@@ -11,6 +11,15 @@
 |
 */
 
+/*
+ * A good way to include parameters in all views you need
+View::composer('stats', function($view) {
+   $view->with('stats', app('App\Stats'));
+}
+
+
+ */
+
 Route::group(['middleware' => ['web']], function() {
    // All Routes go through TempController to make sure we get data saved into the database
    //Route::get('begin', function() {
