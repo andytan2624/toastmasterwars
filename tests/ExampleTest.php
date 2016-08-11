@@ -17,7 +17,7 @@ class ExampleTest extends TestCase
     {
         $countries = factory(\App\Models\Country::class)->create();
 
-        $this->visit('scores')
-            ->see('Kim');
+        $andy = factory('App\Models\User')->create(['email' => 'andy@email.com']);
+        $this->actingAs($andy)->visit('/admin')->see('Hello Andy');
     }
 }

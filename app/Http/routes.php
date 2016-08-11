@@ -62,8 +62,17 @@ Route::group(['middleware' => ['web']], function() {
    //    return App\Flight::findOrFail($id);
    //});
 
+   // Authentication and Logging In
    Route::auth();
 
    Route::get('/home', 'HomeController@index');
+
+   // Admin Area
+   Route::group(['prefix' => 'admin', 'as' => 'Admin::'], function() {
+      Route::get('home', ['as' => 'home', function() {
+         return 'some_view';
+      }]);
+   });
+
 
 });

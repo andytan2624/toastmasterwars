@@ -11,7 +11,7 @@ class ShowGreeting extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'laracasts:greeting {name=Liam}';
 
     /**
      * The console command description.
@@ -38,5 +38,6 @@ class ShowGreeting extends Command
     public function handle()
     {
         //
+        $this->info('Hello '.$this->argument('name'));
     }
 }
