@@ -12,5 +12,9 @@
             </div>
         </div>
     </div>
+
+    @can('is-super-admin')
+        Hello World
+    @endcan
 </div>
 @endsection

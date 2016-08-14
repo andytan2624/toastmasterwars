@@ -45,6 +45,9 @@ RUN apt-get update && apt-get install -y \
 # Clean up, to free some space
 RUN apt-get clean
 
+# Configure PHP
+RUN sed -i "s/;date.timezone =.*/date.timezone = Australia\/Sydney/" /etc/php/7.0/cli/php.ini
+
 # Install gulp and bower with NPM
 RUN npm install -g \
     gulp \

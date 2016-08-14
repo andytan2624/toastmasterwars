@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Request;
 use DB;
+use Gate;
 
 class ScoreController extends Controller
 {
@@ -24,7 +25,7 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        //
+
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
         $scores = Score::all();
@@ -59,6 +60,11 @@ class ScoreController extends Controller
      */
     public function create()
     {
+        $this->authorize('is-super-admin');
+        //if (Gate::denies('is-super-admin')) {
+        //    abort('403', 'Sorry not sorry');
+        //}
+
         $score = new Score();
 
         $clubs = Club::lists('name', 'id');

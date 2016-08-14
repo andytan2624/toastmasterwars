@@ -21,11 +21,6 @@ View::composer('stats', function($view) {
  */
 
 Route::group(['middleware' => ['web']], function() {
-   // All Routes go through TempController to make sure we get data saved into the database
-   //Route::get('begin', function() {
-   //   Session::flash('status', 'tangenstein');
-   //   return view('home');
-   //});
 
    Route::get('/', 'HomeController@index');
 
@@ -57,11 +52,6 @@ Route::group(['middleware' => ['web']], function() {
    Route::get('scores/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'ScoreController@edit']);
    Route::post('scores', 'ScoreController@store');
 
-
-   //Route::get('/api/flights/{id}', function ($id) {
-   //    return App\Flight::findOrFail($id);
-   //});
-
    // Authentication and Logging In
    Route::auth();
 
@@ -74,5 +64,6 @@ Route::group(['middleware' => ['web']], function() {
       }]);
    });
 
-
 });
+
+

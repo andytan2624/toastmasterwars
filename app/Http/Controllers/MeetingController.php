@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Mockery\CountValidator\Exception;
 use Request;
+use Gate;
 
 class MeetingController extends Controller
 {
@@ -67,6 +68,10 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
+        //$meeting = Meeting::find($id);
+        //if (Gate::denies('show', $meeting)) {
+        //    abort(403, 'Nope.');
+        //}
         try {
             $meeting = Meeting::find($id);
             $statusCode = 200;
