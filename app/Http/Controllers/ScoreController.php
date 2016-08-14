@@ -68,9 +68,9 @@ class ScoreController extends Controller
         $score = new Score();
 
         $clubs = Club::lists('name', 'id');
-        $users = User::all()->pluck('full_name', 'id');
+        $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
         $points = Point::all()->sortBy('category.name')->pluck('full_name', 'id');
-        $meetings = Meeting::all()->pluck('full_name', 'id');
+        $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
         return view('scores.create', compact('score', 'clubs', 'users', 'points', 'meetings'));
     }
 
