@@ -70,7 +70,7 @@ class UserController extends Controller
         $user_club->date_joined = $input['date_joined'];
         $user_club->save();
 
-        return redirect('users');
+        return redirect('users/create');
     }
 
     public function edit($id)
