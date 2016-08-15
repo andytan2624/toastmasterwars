@@ -16,5 +16,9 @@
     @can('is-super-admin')
         Hello World
     @endcan
+
+    @can('add_scores')
+        I can add scores
+    @endcan
 </div>
 @endsection
