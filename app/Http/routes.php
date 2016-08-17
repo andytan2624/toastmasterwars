@@ -32,6 +32,10 @@ Route::group(['middleware' => ['web']], function() {
    Route::post('users', 'UserController@store');
    Route::patch('users/{user}', [ 'as' => 'users.update', 'uses' => 'UserController@update']);
 
+   Route::get('pousers/{user}', function(App\Models\User $user) {
+      return $user;
+   });
+
    // Meetings
    Route::get('meetings', 'MeetingController@index');
    Route::get('meetings/create', 'MeetingController@create');
@@ -64,6 +68,7 @@ Route::group(['middleware' => ['web']], function() {
       }]);
    });
 
+   Route::get('find', 'SearchController@find');
 });
 
 
