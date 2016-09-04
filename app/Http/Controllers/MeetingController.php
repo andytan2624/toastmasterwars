@@ -32,7 +32,7 @@ class MeetingController extends Controller
     {
         $meeting = new Meeting;
         $clubs = Club::lists('name', 'id');
-        $users = User::all()->pluck('full_name', 'id');
+        $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
 
         return view('meetings.create', compact('meeting', 'clubs', 'users'));

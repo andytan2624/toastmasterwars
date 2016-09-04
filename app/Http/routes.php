@@ -38,6 +38,7 @@ Route::get('scores/{id}', 'ScoreController@show');
 Route::get('scores/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'ScoreController@edit']);
 Route::post('scores', 'ScoreController@store');
 
+Route::get('findUser', 'SearchController@findUser');
 
 //Route::get('/api/flights/{id}', function ($id) {
 //    return App\Flight::findOrFail($id);
