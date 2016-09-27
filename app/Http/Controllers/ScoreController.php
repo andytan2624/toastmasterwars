@@ -9,11 +9,11 @@ use App\Models\Meeting;
 use App\Models\Point;
 use App\Models\Club;
 
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Request;
 use DB;
+use Illuminate\Support\Facades\Config;
 
 class ScoreController extends Controller
 {
@@ -22,12 +22,30 @@ class ScoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        /**
+         * If the request is a POST method, then check the dates to pick the scores between those dates
+         */
+        $start_date = '';
+        $end_date = '';
+        if ($request->isMethod('post')) {
+            $start_date = $request->input('start_date', '');
+            $end_date = $request->input('end_date', '');
+        }
+
+        if ($start_date == '' || $end_date == '') {
+            $quarter_dates = getQuarterDates();
+            $current_year = date('Y');
+            $start_date = $current_year.'-'.$quarter_dates['start_date'];
+            $end_date = $current_year.'-'.$quarter_dates['end_date'];
+        }
+
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
-        $scores = Score::all();
+        $scores = Score::where('created_at', '>=', $start_date)
+            ->where('created_at', '<=', $end_date)
+            ->get();
 
         $tallyArray = array();
         $currentScores = array();
@@ -41,10 +59,8 @@ class ScoreController extends Controller
             $tallyArray[$score->user_id] += $score->point_value;
         }
 
-        $latestMeeting = Meeting::all()->last();
-        $latestScores = Score::where('meeting_id', $latestMeeting->id)->get();
-        foreach ($latestScores as $latestScore) {
-            $currentScores[$latestScore->user_id][] = $latestScore->point->category->name . ' : ' . $latestScore->point_value . ' points';
+        foreach ($scores as $score) {
+            $currentScores[$score->user_id][] = $score->point->category->name . ' : ' . $score->point_value . ' points';
         }
 
         arsort($tallyArray);
@@ -76,14 +92,21 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-        $input = Request::all();
+        $input = $request->all();
 
         $input['evaluator'] = !$input['evaluator'] ? null : $input['evaluator'];
         $input['meeting_id'] = !$input['meeting_id'] ? null : $input['meeting_id'];
 
         // Get the point value
         $point = Point::find($input['point_id']);
-        $input['point_value'] = $point->point_value;
+        /**
+         * If the point category is the custom, use the point value inputted from the form
+         */
+        if ($point->category_id = config('constants.custom_point_category_id')) {
+            $input['point_value'] = $input['custom_point_value'];
+        } else {
+            $input['point_value'] = $point->point_value;
+        }
 
         Score::create($input);
 
@@ -133,5 +156,13 @@ class ScoreController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Function which takes the post parameters of start and end date, and
+     */
+    public function history()
+    {
+
     }
 }

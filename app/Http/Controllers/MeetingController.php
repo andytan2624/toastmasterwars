@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use App\Models\Club;
 use App\Models\User;
+use App\Models\Score;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -32,10 +33,13 @@ class MeetingController extends Controller
     {
         $meeting = new Meeting;
         $clubs = Club::lists('name', 'id');
+        // Get the last meeting
+        $previousMeetingID = Meeting::orderby('id', 'desc')->first()->meeting_number;
+        $nextMeetingID = $previousMeetingID + 1;
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
 
-        return view('meetings.create', compact('meeting', 'clubs', 'users'));
+        return view('meetings.create', compact('meeting', 'clubs', 'users', 'nextMeetingID'));
     }
 
     /**
@@ -47,8 +51,13 @@ class MeetingController extends Controller
     public function store(Request $request)
     {
         $input = Request::all();
+        $meeting_data = Meeting::create($input);
+        $input['meeting_id'] = $meeting_data->id;
 
-        Meeting::create($input);
+        $score = new Score();
+        $score->createMeetingScores($input);
+
+        // Now we've created our meeting, we will pass the input the score controller to handle
 
         return redirect('meetings/create');
     }

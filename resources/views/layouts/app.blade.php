@@ -79,63 +79,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-    <!-- Typeahead.js Bundle -->
-    <script src="/js/bootstrap-timepicker.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            // Set the Options for "Bloodhound" suggestion engine
-            var engine = new Bloodhound({
-                remote: {
-                    url: '/findUser?q=%QUERY%',
-                    wildcard: '%QUERY%'
-                },
-                datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace
-            });
+    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js">
 
-            $(".typeaheadinput").typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 2
-            }, {
-                source: engine.ttAdapter(),
-
-                // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
-                name: 'usersList',
-                display: 'first_name',
-                // COULD HAVE SOEMTHING TO DO WITH SETTING RETURN TYPE AS JSONP
-                // the key from the array we want to display (name,id,email,etc...)
-                templates: {
-                    empty: [
-                        '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                    ],
-                    header: [
-                        '<div class="list-group search-results-dropdown">'
-                    ],
-                    suggestion: function (data) {
-                        return '<div class="list-group-item">' + data.first_name + ' ' + data.last_name + '</div>'
-                    }
-                }
-            });
-
-            $('#attendance').bind('typeahead:select', function(ev, suggestion) {
-                $('#attendance_list').append('<li>' + suggestion.first_name + ' ' + suggestion.last_name + '</li>');
-                $('#attendance_ids').val(suggestion.id + '|' + $('#attendance_ids').val() );
-                $('.typeaheadinput').typeahead('val','');
-
-            });
-
-            $('#apologies').bind('typeahead:select', function(ev, suggestion) {
-                $('#apologies_list').append('<li>' + suggestion.first_name + ' ' + suggestion.last_name + '</li>');
-                $('#apologies_ids').val(suggestion.id + '|' + $('#apologies_ids').val() );
-                $('.typeaheadinput').typeahead('val','');
-            });
-
-        });
-
-        $('#meeting_time').timepicker();
-    </script>
+    @yield('meeting_create_js')
 
 </body>
 </html>

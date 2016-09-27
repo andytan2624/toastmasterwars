@@ -26,6 +26,12 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('custom_point_value', 'Custom Point Value:') !!}
+        {!! Form::text('custom_point_value', old('custom_point_value'), ['class' => 'form-control']) !!}
+    </div>
+
+
+    <div class="form-group">
         {!! Form::label('speech_title', 'Speech Title:') !!}
         {!! Form::text('speech_title', old('speech_title'), ['class' => 'form-control']) !!}
     </div>

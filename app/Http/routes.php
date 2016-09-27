@@ -37,6 +37,7 @@ Route::get('scores/create', 'ScoreController@create');
 Route::get('scores/{id}', 'ScoreController@show');
 Route::get('scores/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'ScoreController@edit']);
 Route::post('scores', 'ScoreController@store');
+Route::post('scores/search', 'ScoreController@index');
 
 Route::get('findUser', 'SearchController@findUser');
 
