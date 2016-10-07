@@ -59,7 +59,7 @@ class Score extends Model
             /**
              * Create a score record if the key is a slug for a field in the database
              */
-            if (isset($pointsData[$key])) {
+            if (isset($pointsData[$key]) && $value != "") {
                 $score = new Score();
                 $score->evaluator = null;
                 $score->which_half = $meeting_half;
