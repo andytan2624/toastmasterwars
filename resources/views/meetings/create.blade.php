@@ -231,6 +231,11 @@
                 </div>
 
                 <div class="form-group">
+                    {!! Form::label('timer', 'Timer:') !!}
+                    {!! Form::select('timer', $users, old('timer'), ['placeholder' => 'Pick a user']) !!}
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('most_ahs', 'Most Ahs:') !!}
                     {!! Form::select('most_ahs', $users, old('most_ahs'), ['placeholder' => 'Pick a user']) !!}
                 </div>
