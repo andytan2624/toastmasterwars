@@ -14,7 +14,7 @@
 //Route::get('/', 'HomeController@index');
 
 // All Routes go through TempController to make sure we get data saved into the database
-Route::get('/', 'UserController@index');
+Route::get('/', 'ScoreController@index');
 
 // Users
 Route::get('users', 'UserController@index');
