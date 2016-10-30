@@ -38,6 +38,15 @@ class User extends Authenticatable
         return $this->first_name . " " . $this->last_name;
     }
 
+    /**
+     * Will check if the current user is a super admin who can create meetings, scores and users
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->is_super_admin ? true : false;
+    }
+
     public function scores()
     {
         // Get all related scores for this user

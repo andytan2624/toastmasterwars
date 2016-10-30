@@ -19,5 +19,6 @@ elixir(function(mix) {
 
     mix.less('./bower_components/bootstrap-timepicker/css/timepicker.less', 'public/css/timepicker.css');
 
+    mix.scripts('meetings.js', 'public/js/meetings.js');
 
 });
