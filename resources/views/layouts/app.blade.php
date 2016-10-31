@@ -75,9 +75,9 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="/components/jquery/dist/jquery.min.js"></script>
-    <script src="/components/bootstrap/dist/js/bootstrap.min.js" ></script>
-
+    {!! Html::script('/components/jquery/dist/jquery.min.js') !!}
+    {!! Html::script('/components/bootstrap/dist/js/bootstrap.min.js') !!}
     <?php echo $__env->yieldContent('meeting_create_js'); ?>
+    <?php echo $__env->yieldContent('scores_index_js'); ?>
 </body>
 </html>

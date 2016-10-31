@@ -9,6 +9,13 @@
                 Start Date: <input type="date" name="start_date" class="form-control">
             </div>
             <div class="input-group date" data-provide="datepicker">
+                Start Date:
+                {!! Form::date('start_date', null, [
+                    'class' => 'form-control',
+                    'data-parsley-required-message' => 'Email is required'
+                ]) !!}
+            </div>
+            <div class="input-group date" data-provide="datepicker">
                 End Date: <input type="date" name="end_date" class="form-control">
             </div>
             <input type="submit" value="Submit" class="btn btn-primary">
@@ -73,3 +80,7 @@
         </div>
     </div>
 @stop
+
+@section('scores_index_js')
+    {!! Html::script('/components/parsleyjs/dist/parsley.js') !!}
+@endsection
