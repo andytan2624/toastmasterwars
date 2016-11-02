@@ -4,21 +4,27 @@
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             {!! Form::open(array('url' => '/scores/search', 'method' => 'post')) !!}
-
-            <div class="input-group date" data-provide="datepicker">
-                Start Date: <input type="date" name="start_date" class="form-control">
-            </div>
-            <div class="input-group date" data-provide="datepicker">
-                Start Date:
-                {!! Form::date('start_date', null, [
-                    'class' => 'form-control',
-                    'data-parsley-required-message' => 'Email is required'
-                ]) !!}
-            </div>
-            <div class="input-group date" data-provide="datepicker">
-                End Date: <input type="date" name="end_date" class="form-control">
-            </div>
-            <input type="submit" value="Submit" class="btn btn-primary">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="input-group date" data-provide="datepicker">
+                            Start Date:
+                            {!! Form::date('start_date', old('start_date'), [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group date" data-provide="datepicker">
+                            End Date:
+                            {!! Form::date('end_date', old('end_date'), [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </div>
             {!! Form::close() !!}
         </div>
     </div>

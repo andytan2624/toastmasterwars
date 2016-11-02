@@ -20,6 +20,7 @@ Route::get('users/{id}', 'UserController@show');
 
 // Score
 Route::get('scores', 'ScoreController@index');
+Route::post('scores/search', 'ScoreController@dashboard');
 
 // Ajax function for typeahead
 Route::get('findUser', 'SearchController@findUser');
@@ -44,7 +45,6 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::get('scores/{id}', 'ScoreController@show');
     Route::get('scores/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'ScoreController@edit']);
     Route::post('scores', 'ScoreController@store');
-    Route::post('scores/search', 'ScoreController@index');
 });
 
 Route::group(['prefix' => 'api/v1'], function() {

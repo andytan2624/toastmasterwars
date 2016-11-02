@@ -32,6 +32,7 @@ class Score extends Model
             ->get();
 
         $pointsData = array();
+
         /**
          * Sort points object into array, indexed by the slug name
          * for easy reference
@@ -57,16 +58,20 @@ class Score extends Model
             /**
              * Create a score record if the key is a slug for a field in the database
              */
-            if (isset($pointsData[$key]) && $value != "") {
+
+            // Change key to toastmaster if its toastmaster_1 or toastmaster_2
+            $new_key = in_array($key, config('constants.toastmaster_alias_array')) ? config('constants.toastmaster_slug') : $key;
+
+            if (isset($pointsData[$new_key]) && $value != "") {
                 $score = new Score();
                 $score->evaluator = null;
                 $score->which_half = $meeting_half;
                 $score->club_id = $input['club_id'];
                 $score->meeting_id = $input['meeting_id'];
                 $score->user_id = $value;
-                $score->notes = $key == config('constants.grammarian_slug') ? $input[config('constants.word_of_the_day_slug')] : '';
-                $score->point_id = $pointsData[$key]->id;
-                $score->point_value = $pointsData[$key]->point_value;
+                $score->notes = $new_key == config('constants.grammarian_slug') ? $input[config('constants.word_of_the_day_slug')] : '';
+                $score->point_id = $pointsData[$new_key]->id;
+                $score->point_value = $pointsData[$new_key]->point_value;
                 $score->save();
             }
             /**
@@ -130,11 +135,11 @@ class Score extends Model
         /**
          * Redirect back to the scores page
          */
-        redirect('ScoreController@index');
+        redirect('ScoreController@dashboard');
     }
 
     public function createScore($id) {
 
-        // Score::create($input);
+
     }
 }

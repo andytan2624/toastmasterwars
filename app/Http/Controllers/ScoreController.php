@@ -58,8 +58,8 @@ class ScoreController extends Controller
 
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
-        $scores = Score::where('created_at', '>=', $start_date)
-            ->where('created_at', '<=', $end_date)
+        $scores = Score::where('created_at', '>=', $start_date." 00:00:00")
+            ->where('created_at', '<=', $end_date." 23:59:59")
             ->get();
 
         $tallyArray = array();

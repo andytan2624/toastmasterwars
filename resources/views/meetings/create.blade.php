@@ -130,12 +130,6 @@
             <ul id="table_topics_evaluators_list"></ul>
             <input type="hidden" id="table_topics_evaluators_ids" name="table_topics_evaluators_ids" value=""/>
 
-
-            <div class="form-group">
-                {!! Form::label('table_topics_evaluator_2', 'Table Topics Evaluator 2:') !!}
-                {!! Form::select('table_topics_evaluator_2', $users, old('table_topics_evaluator_2'), ['placeholder' => 'Pick a user']) !!}
-            </div>
-
             <div class="form-group">
                 {!! Form::label('table_topics_winner', 'Table Topics Winner:') !!}
                 {!! Form::select('table_topics_winner', $users, old('table_topics_winner'), ['placeholder' => 'Pick a user']) !!}

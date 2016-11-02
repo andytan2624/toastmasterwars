@@ -11,6 +11,11 @@ return [
     'speech_evaluator_point_slug' => 'speech_evaluator',
     'grammarian_slug' => 'grammarian',
     'word_of_the_day_slug' => 'word_of_the_day',
+    'toastmaster_slug' => 'toastmaster',
+    'toastmaster_alias_array' => array(
+        'toastmaster_1',
+        'toastmaster_2'
+    ),
     /**
      * Form Category slug names
      */
