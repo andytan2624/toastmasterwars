@@ -25,8 +25,6 @@ class Score extends Model
      */
     public function createMeetingScores($input) {
 
-        var_dump($input);
-
         $points = Point::join('categories' , 'points.category_id', '=', 'categories.id')
             ->where('categories.meeting_order', '!=', -1)
             ->orderBy('categories.meeting_order')

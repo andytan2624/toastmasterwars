@@ -7,23 +7,33 @@ use App\Models\UserClub;
 use App\Models\ExecutiveRoleClub;
 use App\Models\User;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Request;
+use App\Custom\Transformers\UserTransformer;
 
 class UserController extends Controller
 {
 
-    public function __construct()
-    {
+    /**
+     * Custom\Transformers\UserTransformer
+     */
+    protected $userTransformer;
 
+    public function __construct(UserTransformer $userTransformer)
+    {
+        $this->userTransformer = $userTransformer;
     }
 
     public function index()
     {
-        $users = User::latest()->get();
+        $limit = Input::get('limit') ?: 3;
+        $users = User::paginate($limit);
 
-        return view('users/index', compact('users'));
+        return $this->respondWithPagination(
+            $users,
+            $this->userTransformer->transformCollection($users->getCollection())
+        );
     }
 
     public function create()
@@ -38,9 +48,15 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
-        return view('users.show', compact('user'));
+        if (!$user) {
+            return $this->respondNotFound('User does not exist.');
+        }
+
+        return $this->respond([
+            'data' => $this->userTransformer->transform($user)
+        ]);
     }
 
     public function store()
@@ -71,6 +87,17 @@ class UserController extends Controller
         $user_club->save();
 
         return redirect('users/create');
+
+        /**
+         * if (invalid)
+         * {
+         *  return $this->setStatusCode(422)->respondWithError('Parameters failed validation for a lesson.');
+         * }
+         *
+         * User::create($input);
+         *
+         * return $this->respondCreated('Lesson successfully created.');
+         */
     }
 
     public function edit($id)
@@ -83,5 +110,7 @@ class UserController extends Controller
 
         return view('users.edit', compact('user', 'clubs', 'executive_roles'));
     }
+
+
 }
 

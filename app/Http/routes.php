@@ -12,10 +12,11 @@
 */
 
 // The home page should be redirected to the score page
-Route::get('/', 'ScoreController@index');
+Route::get('/', 'ScoreController@dashboard');
 
 // Users
 Route::get('users', 'UserController@index');
+Route::get('users/{id}', 'UserController@show');
 
 // Score
 Route::get('scores', 'ScoreController@index');
@@ -28,7 +29,6 @@ Route::auth();
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users
     Route::get('users/create', 'UserController@create');
-    Route::get('users/{id}', 'UserController@show');
     Route::get('users/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'UserController@edit']);
     Route::post('users', 'UserController@store');
 
@@ -47,4 +47,11 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::post('scores/search', 'ScoreController@index');
 });
 
+Route::group(['prefix' => 'api/v1'], function() {
 
+    Route::get('users/{user_id}/scores', 'ScoreController@index');
+
+    Route::resource('users', 'UserController');
+    Route::resource('scores', 'ScoreController', ['only' => ['index', 'show']]);
+
+});

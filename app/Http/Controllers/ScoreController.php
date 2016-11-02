@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\Transformers\ScoreTransformer;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Category;
@@ -17,12 +18,26 @@ use Illuminate\Support\Facades\Config;
 
 class ScoreController extends Controller
 {
+
+    protected $scoreTransformer;
+
+    public function __construct(ScoreTransformer $scoreTransformer)
+    {
+        $this->scoreTransformer = $scoreTransformer;
+    }
+
+    public function index($user_id = null) {
+        $scores = $user_id ? User::find($user_id)->scores : Score::all();
+        return $this->respond([
+            'scores' => $this->scoreTransformer->transformCollection($scores)
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function dashboard(Request $request)
     {
         /**
          * If the request is a POST method, then check the dates to pick the scores between those dates
@@ -65,7 +80,7 @@ class ScoreController extends Controller
 
         arsort($tallyArray);
 
-        return view('scores.index', compact('users', 'tallyArray', 'currentScores'));
+        return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores'));
     }
 
     /**
@@ -165,4 +180,6 @@ class ScoreController extends Controller
     {
 
     }
+
+
 }

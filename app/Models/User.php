@@ -14,7 +14,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'member_number', 'date_joined'
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'member_number',
+        'date_joined',
+        'is_super_admin',
+        'date_left'
     ];
 
     protected $searchable = [
