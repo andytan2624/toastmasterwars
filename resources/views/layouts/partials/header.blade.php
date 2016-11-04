@@ -21,9 +21,10 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Home</a></li>
                 <li><a href="{{ url('/users') }}">Users</a></li>
+                <li><a href="{{ url('/statistics') }}">Statistics</a></li>
                 @if (isSuperAdminUser())
-                    <li><a href="{{ url('/users') }}">Meetings</a></li>
-                    <li><a href="{{ url('/users') }}">Points</a></li>
+                    <li><a href="{{ url('/meetings') }}">Meetings</a></li>
+                    <li><a href="{{ url('/points') }}">Points</a></li>
                 @endif
             </ul>
 

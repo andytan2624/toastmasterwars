@@ -44,9 +44,12 @@ class ScoreController extends Controller
          */
         $start_date = '';
         $end_date = '';
+        $meeting_id = '';
+        $request->flash();
         if ($request->isMethod('post')) {
             $start_date = $request->input('start_date', '');
             $end_date = $request->input('end_date', '');
+            $meeting_id = $request->input('meeting_id', '');
         }
 
         if ($start_date == '' || $end_date == '') {
@@ -58,9 +61,15 @@ class ScoreController extends Controller
 
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
-        $scores = Score::where('created_at', '>=', $start_date." 00:00:00")
+        $query = Score::where('created_at', '>=', $start_date." 00:00:00")
             ->where('created_at', '<=', $end_date." 23:59:59")
-            ->get();
+            ->where('point_value', '>', 0);
+
+        if ($meeting_id != '') {
+            $query->where('meeting_id', '=', $meeting_id);
+        }
+
+        $scores = $query->get();
 
         $tallyArray = array();
         $currentScores = array();
@@ -80,7 +89,10 @@ class ScoreController extends Controller
 
         arsort($tallyArray);
 
-        return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores'));
+
+        $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
+
+        return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores', 'meetings'));
     }
 
     /**

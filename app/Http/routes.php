@@ -13,6 +13,7 @@
 
 // The home page should be redirected to the score page
 Route::get('/', 'ScoreController@dashboard');
+Route::post('/', 'ScoreController@dashboard');
 
 // Users
 Route::get('users', 'UserController@index');
@@ -20,7 +21,6 @@ Route::get('users/{id}', 'UserController@show');
 
 // Score
 Route::get('scores', 'ScoreController@index');
-Route::post('scores/search', 'ScoreController@dashboard');
 
 // Ajax function for typeahead
 Route::get('findUser', 'SearchController@findUser');
