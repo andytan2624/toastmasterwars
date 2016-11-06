@@ -10,4 +10,5 @@ class ExecutiveRoleClub extends Model
 {
     //
     protected $table = 'executive_role_clubs';
+
 }

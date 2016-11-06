@@ -179,6 +179,7 @@
 
             <!-- 2ND HALF -->
             <hr/>
+
             <h2>Second Half</h2>
             <div class="form-group">
                 {!! Form::label('toastmaster_2', 'Toastmaster 2:') !!}

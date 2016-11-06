@@ -84,7 +84,7 @@ class ScoreController extends Controller
         }
 
         foreach ($scores as $score) {
-            $currentScores[$score->user_id][] = $score->point->category->name . ' : ' . $score->point_value . ' points';
+            $currentScores[$score->user_id][] = $score->displayScore();
         }
 
         arsort($tallyArray);
@@ -126,6 +126,7 @@ class ScoreController extends Controller
 
         // Get the point value
         $point = Point::find($input['point_id']);
+
         /**
          * If the point category is the custom, use the point value inputted from the form
          */

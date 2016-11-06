@@ -10,7 +10,7 @@ use App\Models\Score;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Request;
+use Illuminate\Http\Request;
 
 class MeetingController extends Controller
 {
@@ -50,12 +50,11 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        $input = Request::all();
+        $input = $request->all();
         $meeting_data = Meeting::create($input);
         $input['meeting_id'] = $meeting_data->id;
 
-        $score = new Score();
-        $score->createMeetingScores($input);
+        Score::createMeetingScores($input);
 
         // Now we've created our meeting, we will pass the input the score controller to handle
 
