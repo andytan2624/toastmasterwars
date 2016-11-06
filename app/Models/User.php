@@ -14,7 +14,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'member_number', 'date_joined'
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'member_number',
+        'date_joined',
+        'is_super_admin',
+        'date_left'
     ];
 
     protected $searchable = [
@@ -38,6 +45,15 @@ class User extends Authenticatable
         return $this->first_name . " " . $this->last_name;
     }
 
+    /**
+     * Will check if the current user is a super admin who can create meetings, scores and users
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->is_super_admin ? true : false;
+    }
+
     public function scores()
     {
         // Get all related scores for this user
@@ -48,6 +64,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserClub::class);
     }
+
 
 
 }

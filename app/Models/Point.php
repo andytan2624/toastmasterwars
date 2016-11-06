@@ -19,8 +19,6 @@ class Point extends Model
 
     public function getFullNameAttribute()
     {
-        //var_dump($this->category());
-
         return $this->category->name . ' - ' .$this->point_value . ' points' ;
     }
 }

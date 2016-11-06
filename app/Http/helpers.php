@@ -1,5 +1,12 @@
 <?php
 /**
+ * Check if logged in user is a super admin user
+ */
+function isSuperAdminUser() {
+    return Auth::check() && Auth::user()->isSuperAdmin();
+}
+
+/**
  * Given a string, return the array of values and removing empty values
  */
 function parseIDString($IDString, $split) {

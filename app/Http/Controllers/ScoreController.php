@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\Transformers\ScoreTransformer;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Category;
@@ -17,21 +18,38 @@ use Illuminate\Support\Facades\Config;
 
 class ScoreController extends Controller
 {
+
+    protected $scoreTransformer;
+
+    public function __construct(ScoreTransformer $scoreTransformer)
+    {
+        $this->scoreTransformer = $scoreTransformer;
+    }
+
+    public function index($user_id = null) {
+        $scores = $user_id ? User::find($user_id)->scores : Score::all();
+        return $this->respond([
+            'scores' => $this->scoreTransformer->transformCollection($scores)
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function dashboard(Request $request)
     {
         /**
          * If the request is a POST method, then check the dates to pick the scores between those dates
          */
         $start_date = '';
         $end_date = '';
+        $meeting_id = '';
+        $request->flash();
         if ($request->isMethod('post')) {
             $start_date = $request->input('start_date', '');
             $end_date = $request->input('end_date', '');
+            $meeting_id = $request->input('meeting_id', '');
         }
 
         if ($start_date == '' || $end_date == '') {
@@ -43,9 +61,15 @@ class ScoreController extends Controller
 
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
-        $scores = Score::where('created_at', '>=', $start_date)
-            ->where('created_at', '<=', $end_date)
-            ->get();
+        $query = Score::where('created_at', '>=', $start_date." 00:00:00")
+            ->where('created_at', '<=', $end_date." 23:59:59")
+            ->where('point_value', '>', 0);
+
+        if ($meeting_id != '') {
+            $query->where('meeting_id', '=', $meeting_id);
+        }
+
+        $scores = $query->get();
 
         $tallyArray = array();
         $currentScores = array();
@@ -60,12 +84,15 @@ class ScoreController extends Controller
         }
 
         foreach ($scores as $score) {
-            $currentScores[$score->user_id][] = $score->point->category->name . ' : ' . $score->point_value . ' points';
+            $currentScores[$score->user_id][] = $score->displayScore();
         }
 
         arsort($tallyArray);
 
-        return view('scores.index', compact('users', 'tallyArray', 'currentScores'));
+
+        $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
+
+        return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores', 'meetings'));
     }
 
     /**
@@ -99,6 +126,7 @@ class ScoreController extends Controller
 
         // Get the point value
         $point = Point::find($input['point_id']);
+
         /**
          * If the point category is the custom, use the point value inputted from the form
          */
@@ -165,4 +193,6 @@ class ScoreController extends Controller
     {
 
     }
+
+
 }

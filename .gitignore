@@ -18,3 +18,7 @@ bootstrap/cache/
 .idea/*
 
 laradock/logs
+
+# Compiled files we won't keep track off
+public/css/*
+public/js/*
