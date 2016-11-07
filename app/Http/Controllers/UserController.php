@@ -9,7 +9,7 @@ use App\Http\Requests;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use App\Custom\Transformers\UserTransformer;
+use App\ToastmasterWars\Transformers\UserTransformer;
 
 class UserController extends Controller
 {

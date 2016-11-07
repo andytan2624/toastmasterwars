@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Custom\Transformers;
+namespace App\ToastmasterWars\Transformers;
 
 abstract class Transformer {
     /**

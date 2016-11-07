@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use App\Models\Club;
 use App\Models\User;
-use App\Models\Score;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\ToastmasterWars\Components\MeetingComponent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -53,12 +53,14 @@ class MeetingController extends Controller
         $input = $request->all();
         $meeting_data = Meeting::create($input);
         $input['meeting_id'] = $meeting_data->id;
+        // Set by default the meeting to be in the 1st half
+        $input['which_half'] = 1;
 
-        Score::createMeetingScores($input);
+        // Record scores for each user's participation in the meeting
+        $meetingComponent = new MeetingComponent();
+        $meetingComponent->createMeetingScores($input);
 
-        // Now we've created our meeting, we will pass the input the score controller to handle
-
-        return redirect('meetings/create');
+        return redirect('/');
     }
 
     /**

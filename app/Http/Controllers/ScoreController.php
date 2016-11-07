@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Custom\Transformers\ScoreTransformer;
+use App\ToastmasterWars\Transformers\ScoreTransformer;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Category;
@@ -39,6 +39,8 @@ class ScoreController extends Controller
      */
     public function dashboard(Request $request)
     {
+        $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
+
         /**
          * If the request is a POST method, then check the dates to pick the scores between those dates
          */
@@ -88,9 +90,6 @@ class ScoreController extends Controller
         }
 
         arsort($tallyArray);
-
-
-        $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
 
         return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores', 'meetings'));
     }
