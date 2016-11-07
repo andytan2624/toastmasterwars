@@ -1,0 +1,23 @@
+version: '2'
+services:
+  app:
+    build: .
+    container_name: unsw-ema
+    volumes:
+      - .:/code
+    ports:
+      - 80:80
+    links:
+      - db
+    environment:
+      - VIRTUAL_HOST=local.ema.com
+  db:
+    image: mysql
+    container_name: unsw-db
+    environment:
+      - MYSQL_DATABASE=ema
+      - MYSQL_USER=ema
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
