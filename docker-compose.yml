@@ -2,7 +2,7 @@ version: '2'
 services:
   app:
     build: .
-    container_name: unsw-ema
+    container_name: toastmasterwars
     volumes:
       - .:/code
     ports:
@@ -10,13 +10,13 @@ services:
     links:
       - db
     environment:
-      - VIRTUAL_HOST=local.ema.com
+      - VIRTUAL_HOST=local.toastmasterwars.com
   db:
     image: mysql
-    container_name: unsw-db
+    container_name: toastmasterwars-db
     environment:
-      - MYSQL_DATABASE=ema
-      - MYSQL_USER=ema
+      - MYSQL_DATABASE=toastmasterwars
+      - MYSQL_USER=toastmaster
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
     ports:
