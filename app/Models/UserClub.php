@@ -24,7 +24,12 @@ class UserClub extends Model
 
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo(User::class);
+    }
+
+    public function club()
+    {
+        return $this->belongsTo(Club::class);
     }
 
     static public function createUserClubRole($user_id = '') {

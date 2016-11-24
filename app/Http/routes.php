@@ -17,6 +17,7 @@ Route::post('/', 'ScoreController@dashboard');
 
 // Users
 Route::get('users', 'UserController@index');
+Route::get('users/view', 'UserController@view');
 Route::get('users/display/{id}', 'UserController@show');
 
 // Score

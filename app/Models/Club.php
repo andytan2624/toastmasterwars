@@ -10,4 +10,8 @@ class Club extends Model
 {
     //
     protected $table = 'clubs';
+
+    public function userClubs() {
+        return $this->hasMany(UserClub::class);
+    }
 }

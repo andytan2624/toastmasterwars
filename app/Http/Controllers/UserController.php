@@ -93,6 +93,18 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'clubs', 'executive_roles'));
     }
 
+    /**
+     * Display all current active users
+     */
+    public function view() {
+        /**
+         * Get list of users who aren't deleted, and get the name of their club
+         */
+        $users = User::with('userClubs', 'userClubs.club')->whereHas('userClubs', function($query) {
+            $query->where('date_left', null);
+        })->orderBy('first_name')->orderBy('last_name')->get()->toArray();
 
+        return view('users.view', compact('users'));
+    }
 }
 
