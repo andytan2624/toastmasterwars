@@ -69,28 +69,28 @@ class UserController extends Controller
         $user->userClubs()->save($userClub);
 
         return redirect('users/create');
-
-        /**
-         * if (invalid)
-         * {
-         *  return $this->setStatusCode(422)->respondWithError('Parameters failed validation for a lesson.');
-         * }
-         *
-         * User::create($input);
-         *
-         * return $this->respondCreated('Lesson successfully created.');
-         */
     }
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::with('userClubs')->where('users.id', '=', $id)->firstOrFail('users.id')->get();
 
         $clubs = Club::lists('name', 'id');
         $executive_roles = ExecutiveRole::lists('name', 'id');
 
-
         return view('users.edit', compact('user', 'clubs', 'executive_roles'));
+    }
+
+    /**
+     * Update a users details
+     * @param $id
+     */
+    public function update($id) {
+        $user = User::findOrFail($id);
+        $input = Input::all();
+        $user->fill($input)->save();
+        $user->userClubs()->updateExistingPivot($input);
+        return redirect()->route('users.view');
     }
 
     /**

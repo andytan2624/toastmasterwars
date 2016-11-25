@@ -17,7 +17,7 @@ Route::post('/', 'ScoreController@dashboard');
 
 // Users
 Route::get('users', 'UserController@index');
-Route::get('users/view', 'UserController@view');
+Route::get('users/view', 'UserController@view')->name('users.view');
 Route::get('users/display/{id}', 'UserController@show');
 
 // Score
@@ -31,7 +31,8 @@ Route::auth();
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users
     Route::get('users/create', 'UserController@create');
-    Route::get('users/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'UserController@edit']);
+    Route::get('users/edit/{id}', 'UserController@edit')->name('users.management.edit');
+    Route::post('users/edit/{id}', 'UserController@update')->name('users.management.update');
     Route::post('users', 'UserController@store');
 
     // Meetings
@@ -44,7 +45,7 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Scores
     Route::get('scores/create', 'ScoreController@create');
     Route::get('scores/{id}', 'ScoreController@show');
-    Route::get('scores/edit/{id}', [ 'as' => 'users.edit', 'uses' => 'ScoreController@edit']);
+    Route::get('scores/edit/{id}', [ 'as' => 'scores.edit', 'uses' => 'ScoreController@edit']);
     Route::post('scores', 'ScoreController@store');
 });
 
