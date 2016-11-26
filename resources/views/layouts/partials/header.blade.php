@@ -20,7 +20,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/users') }}">Users</a></li>
+                <li><a href="{{ route('users.view') }}">Users</a></li>
                 <li><a href="{{ url('/statistics') }}">Statistics</a></li>
                 @if (isSuperAdminUser())
                     <li><a href="{{ url('/meetings') }}">Meetings</a></li>

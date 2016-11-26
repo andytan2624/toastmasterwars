@@ -14,4 +14,9 @@ class Club extends Model
     public function userClubs() {
         return $this->hasMany(UserClub::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'user_clubs');
+    }
 }

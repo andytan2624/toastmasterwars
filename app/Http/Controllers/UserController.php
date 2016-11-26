@@ -73,12 +73,13 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::with('userClubs')->where('users.id', '=', $id)->firstOrFail('users.id')->get();
 
+        $user = User::find($id);
         $clubs = Club::lists('name', 'id');
-        $executive_roles = ExecutiveRole::lists('name', 'id');
 
-        return view('users.edit', compact('user', 'clubs', 'executive_roles'));
+        $relatedClubs = $user->clubs()->getRelatedIds()->toArray();
+
+        return view('users.edit', compact('user', 'clubs', 'relatedClubs'));
     }
 
     /**
@@ -89,7 +90,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $input = Input::all();
         $user->fill($input)->save();
-        $user->userClubs()->updateExistingPivot($input);
+        $user->clubs()->sync($input['club_id']);
         return redirect()->route('users.view');
     }
 

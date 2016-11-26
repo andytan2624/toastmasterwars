@@ -65,6 +65,9 @@ class User extends Authenticatable
         return $this->hasMany(UserClub::class);
     }
 
-
+    public function clubs()
+    {
+        return $this->belongsToMany('App\Models\Club', 'user_clubs');
+    }
 
 }

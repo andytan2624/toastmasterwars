@@ -2,10 +2,8 @@
 
 @section('content')
     <h1>Edit a user</h1>
-    <?php
-    dd($user);
-    ?>
-    {!! Form::model($user, ['method' => 'POST', 'route' => ['users.management.update', $user->id], 'role' => 'form'])  !!}
+
+    {!! Form::model($user, ['method' => 'POST', 'route' => ['users.management.update', 1], 'role' => 'form'])  !!}
 
     @include('users.partials.form')
 
