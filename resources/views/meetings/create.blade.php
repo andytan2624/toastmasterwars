@@ -274,10 +274,9 @@
     {!! Form::close() !!}
 @stop
 
-@section('meeting_create_js')
+@section('js_scripts')
     {!! Html::script('/components/typeahead.js/dist/typeahead.bundle.min.js') !!}
     {!! Html::script('/components/moment/min/moment.min.js') !!}
     {!! Html::script('/components/bootstrap-timepicker/js/bootstrap-timepicker.js') !!}
     {!! Html::script('/js/meetings.js') !!}
-
 @endsection

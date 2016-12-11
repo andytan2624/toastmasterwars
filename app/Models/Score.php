@@ -19,7 +19,16 @@ class Score extends Model
         return $this->belongsTo('App\Models\Point');
     }
 
+    public function meeting() {
+        return $this->belongsTo('App\Models\Meeting');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
     public function displayScore() {
         return $this->point->category->name . ' : ' . $this->point_value . ' points';
     }
+
 }

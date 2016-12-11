@@ -6,6 +6,7 @@ use App\Models\ExecutiveRole;
 use App\Models\UserClub;
 use App\Models\User;
 use App\Http\Requests;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
@@ -13,11 +14,19 @@ use App\ToastmasterWars\Transformers\UserTransformer;
 
 class UserController extends Controller
 {
+    use SoftDeletes;
 
     /**
      * Custom\Transformers\UserTransformer
      */
     protected $userTransformer;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     public function __construct(UserTransformer $userTransformer)
     {
@@ -91,6 +100,16 @@ class UserController extends Controller
         $input = Input::all();
         $user->fill($input)->save();
         $user->clubs()->sync($input['club_id']);
+        return redirect()->route('users.view');
+    }
+
+    /**
+     * Delete a users association with any club
+     * @param $id
+     */
+    public function delete($id) {
+        $user = User::findOrFail($id);
+        $user->userClubs()->delete();
         return redirect()->route('users.view');
     }
 

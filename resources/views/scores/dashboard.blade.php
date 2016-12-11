@@ -90,6 +90,6 @@
     </table>
 @stop
 
-@section('scores_index_js')
+@section('js_scripts')
     {!! Html::script('/components/parsleyjs/dist/parsley.js') !!}
 @endsection

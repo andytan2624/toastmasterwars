@@ -11,6 +11,8 @@
 |
 */
 
+Route::auth();
+
 // The home page should be redirected to the score page
 Route::get('/', 'ScoreController@dashboard');
 Route::post('/', 'ScoreController@dashboard');
@@ -23,14 +25,14 @@ Route::get('users/display/{id}', 'UserController@show');
 // Score
 Route::get('scores', 'ScoreController@index');
 
-// Ajax function for typeahead
-Route::get('findUser', 'SearchController@findUser');
-
-Route::auth();
+// Reporting
+Route::get('reporting', 'ReportingController@view')->name('reporting.management.view');
+Route::post('reporting', 'ReportingController@process')->name('reporting.management.process');
 
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users
     Route::get('users/create', 'UserController@create');
+    Route::post('users/delete/{id}', 'UserController@delete')->name('users.management.delete');
     Route::get('users/edit/{id}', 'UserController@edit')->name('users.management.edit');
     Route::post('users/edit/{id}', 'UserController@update')->name('users.management.update');
     Route::post('users', 'UserController@store');
@@ -47,6 +49,9 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::get('scores/{id}', 'ScoreController@show');
     Route::get('scores/edit/{id}', [ 'as' => 'scores.edit', 'uses' => 'ScoreController@edit']);
     Route::post('scores', 'ScoreController@store');
+
+    // Ajax function for typeahead
+    Route::get('findUser', 'SearchController@findUser');
 });
 
 Route::group(['prefix' => 'api/v1'], function() {
