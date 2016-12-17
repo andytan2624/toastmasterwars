@@ -5,7 +5,7 @@
 @include('layouts.partials.nav')
 
 <div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
+    <div class="col-lg-10 col-lg-offset-1">
         @yield('content')
     </div>
 </div>

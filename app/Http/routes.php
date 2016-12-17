@@ -27,7 +27,7 @@ Route::get('scores', 'ScoreController@index');
 
 // Reporting
 Route::get('reporting', 'ReportingController@view')->name('reporting.management.view');
-Route::post('reporting', 'ReportingController@process')->name('reporting.management.process');
+Route::post('reporting', 'ReportingController@view')->name('reporting.management.process');
 
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users
