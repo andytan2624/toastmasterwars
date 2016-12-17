@@ -34,6 +34,7 @@
     {!! Html::script('/components/highcharts/highcharts.js') !!}
     {!! Html::script('/js/reporting.js') !!}
 
+    @if (count($meetingGraphResults) > 0 || count($userGraphResults) > 0)
     <script type="text/javascript">
         // Meeting Graph
         $(function () {
@@ -119,4 +120,5 @@
             });
         });
     </script>
+    @endif
 @stop

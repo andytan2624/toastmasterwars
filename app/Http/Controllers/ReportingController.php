@@ -19,8 +19,8 @@ class ReportingController extends Controller
      */
     public function view(Request $request) {
 
-        $meetingGraphResults = '';
-        $userGraphResults = '';
+        $meetingGraphResults = [];
+        $userGraphResults = [];
         $categoryTitle = '';
 
         if ($request->isMethod('post')) {
