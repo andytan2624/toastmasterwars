@@ -21,4 +21,5 @@ class Point extends Model
     {
         return $this->category->name . ' - ' .$this->point_value . ' points' ;
     }
+
 }

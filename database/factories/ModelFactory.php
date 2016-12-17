@@ -15,9 +15,10 @@ use App\Models\User;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->name,
+        'last_name' => $faker->name,
         'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'member_number' => $faker->numberBetween(12,123123),
+        'date_joined' => $faker->date('Y-m-d'),
     ];
 });

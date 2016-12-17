@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class UserClub extends Model
 {
-    //
+    use SoftDeletes;
+
     protected $table = 'user_clubs';
 
     protected $fillable = [
@@ -22,9 +23,31 @@ class UserClub extends Model
         'deleted_at'
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo(User::class);
+    }
+
+    public function club()
+    {
+        return $this->belongsTo(Club::class);
     }
 
     static public function createUserClubRole($user_id = '') {

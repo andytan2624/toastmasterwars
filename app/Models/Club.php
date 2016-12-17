@@ -10,4 +10,13 @@ class Club extends Model
 {
     //
     protected $table = 'clubs';
+
+    public function userClubs() {
+        return $this->hasMany(UserClub::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'user_clubs');
+    }
 }

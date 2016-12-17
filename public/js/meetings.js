@@ -38,7 +38,6 @@ jQuery(document).ready(function ($) {
         $('#attendance_list').append('<li>' + suggestion.first_name + ' ' + suggestion.last_name + '</li>');
         $('#attendance_ids').val(suggestion.id + '|' + $('#attendance_ids').val());
         $('.typeaheadinput').typeahead('val', '');
-        console.log('JENNY TANG');
 
     });
 
