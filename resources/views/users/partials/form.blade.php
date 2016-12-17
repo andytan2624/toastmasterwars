@@ -25,10 +25,7 @@
 
 <div class="form-group">
     {!! Form::label('club_id', 'Club:') !!}
-    {!! Form::select('club_id', $clubs, old('club_id'), ['placeholder' => 'Pick a club']) !!}
+{{--    {!! Form::select('club_id', $clubs, old('club_id', 1), ['placeholder' => 'Pick a club']) !!}--}}
+    {!! Form::select('club_id[]', $clubs, $relatedClubs, ['multiple', 'placeholder' => 'Pick a club']) !!}
 </div>
-
-<div class="form-group">
-    {!! Form::label('executive_role_id', 'Executive Role:') !!}
-    {!! Form::select('executive_role_id', $executive_roles, old('executive_role_id'), ['placeholder' => 'Pick a role']) !!}
-</div>
+{{--{{ Form::select('roles[]', $roles, array_pluck($user->roles, 'id'), ['multiple']) }}--}}

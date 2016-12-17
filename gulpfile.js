@@ -16,4 +16,5 @@ elixir(function(mix) {
 
     mix.scripts('meetings.js', 'public/js/meetings.js');
 
+    mix.scripts('reporting.js', 'public/js/reporting.js');
 });

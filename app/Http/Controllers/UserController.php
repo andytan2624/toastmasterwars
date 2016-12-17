@@ -6,18 +6,27 @@ use App\Models\ExecutiveRole;
 use App\Models\UserClub;
 use App\Models\User;
 use App\Http\Requests;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use App\Custom\Transformers\UserTransformer;
+use App\ToastmasterWars\Transformers\UserTransformer;
 
 class UserController extends Controller
 {
+    use SoftDeletes;
 
     /**
      * Custom\Transformers\UserTransformer
      */
     protected $userTransformer;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     public function __construct(UserTransformer $userTransformer)
     {
@@ -69,30 +78,53 @@ class UserController extends Controller
         $user->userClubs()->save($userClub);
 
         return redirect('users/create');
-
-        /**
-         * if (invalid)
-         * {
-         *  return $this->setStatusCode(422)->respondWithError('Parameters failed validation for a lesson.');
-         * }
-         *
-         * User::create($input);
-         *
-         * return $this->respondCreated('Lesson successfully created.');
-         */
     }
 
     public function edit($id)
     {
+
         $user = User::find($id);
-
         $clubs = Club::lists('name', 'id');
-        $executive_roles = ExecutiveRole::lists('name', 'id');
 
+        $relatedClubs = $user->clubs()->getRelatedIds()->toArray();
 
-        return view('users.edit', compact('user', 'clubs', 'executive_roles'));
+        return view('users.edit', compact('user', 'clubs', 'relatedClubs'));
     }
 
+    /**
+     * Update a users details
+     * @param $id
+     */
+    public function update($id) {
+        $user = User::findOrFail($id);
+        $input = Input::all();
+        $user->fill($input)->save();
+        $user->clubs()->sync($input['club_id']);
+        return redirect()->route('users.view');
+    }
 
+    /**
+     * Delete a users association with any club
+     * @param $id
+     */
+    public function delete($id) {
+        $user = User::findOrFail($id);
+        $user->userClubs()->delete();
+        return redirect()->route('users.view');
+    }
+
+    /**
+     * Display all current active users
+     */
+    public function view() {
+        /**
+         * Get list of users who aren't deleted, and get the name of their club
+         */
+        $users = User::with('userClubs', 'userClubs.club')->whereHas('userClubs', function($query) {
+            $query->where('date_left', null);
+        })->orderBy('first_name')->orderBy('last_name')->get()->toArray();
+
+        return view('users.view', compact('users'));
+    }
 }
 

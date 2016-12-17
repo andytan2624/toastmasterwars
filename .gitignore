@@ -22,3 +22,5 @@ laradock/logs
 # Compiled files we won't keep track off
 public/css/*.map
 public/js/*.map
+
+public/components/*
