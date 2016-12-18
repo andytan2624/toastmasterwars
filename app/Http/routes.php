@@ -35,7 +35,7 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::post('users/delete/{id}', 'UserController@delete')->name('users.management.delete');
     Route::get('users/edit/{id}', 'UserController@edit')->name('users.management.edit');
     Route::post('users/edit/{id}', 'UserController@update')->name('users.management.update');
-    Route::post('users', 'UserController@store');
+    Route::post('users', 'UserController@store')->name('users.management.store');
 
     // Meetings
     Route::get('meetings', 'MeetingController@index');

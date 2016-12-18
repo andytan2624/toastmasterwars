@@ -70,10 +70,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-
         $user = User::create($input);
 
         $userClub = new UserClub($input);
+        $userClub->club_id = $input['club_id'][0];
         $userClub->main_club = 1;
         $user->userClubs()->save($userClub);
 

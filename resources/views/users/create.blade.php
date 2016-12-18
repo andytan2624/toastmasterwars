@@ -3,7 +3,7 @@
 @section('content')
     <h1>Create a new user</h1>
 
-    {!! Form::model($user, ['action' => 'UserController@store']) !!}
+    {!! Form::model($user, ['route' => 'users.management.store']) !!}
 
     @include('users.partials.form')
 
