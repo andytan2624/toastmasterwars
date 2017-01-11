@@ -22,8 +22,8 @@
                 <li><a href="{{ url('/') }}">Home</a></li>
                 <li><a href="{{ route('users.view') }}">Users</a></li>
                 <li><a href="{{ url('/reporting') }}">Reporting</a></li>
-                @if (isSuperAdminUser())
-                    <li><a href="{{ url('/meetings') }}">Meetings</a></li>
+                <li><a href="{{ url('/meetings') }}">Meetings</a></li>
+            @if (isSuperAdminUser())
                     <li><a href="{{ url('/points') }}">Points</a></li>
                 @endif
             </ul>

@@ -29,6 +29,10 @@ Route::get('scores', 'ScoreController@index');
 Route::get('reporting', 'ReportingController@view')->name('reporting.management.view');
 Route::post('reporting', 'ReportingController@view')->name('reporting.management.process');
 
+// Meetings
+Route::get('meetings', 'MeetingController@index');
+Route::get('meetings/{id}', 'MeetingController@show')->name('meeting.show');
+
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users
     Route::get('users/create', 'UserController@create');
@@ -38,9 +42,7 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::post('users', 'UserController@store')->name('users.management.store');
 
     // Meetings
-    Route::get('meetings', 'MeetingController@index');
     Route::get('meetings/create', 'MeetingController@create');
-    Route::get('meetings/{id}', 'MeetingController@show')->name('meeting.show');
     Route::get('meetings/edit/{id}', [ 'as' => 'meetings.edit', 'uses' => 'MeetingController@edit']);
     Route::post('meetings', 'MeetingController@store');
 
