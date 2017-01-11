@@ -18,4 +18,9 @@ class Category extends Model
     public function points() {
         return $this->hasMany('App\Models\Point');
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

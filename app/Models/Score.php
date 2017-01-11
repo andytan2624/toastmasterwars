@@ -27,6 +27,10 @@ class Score extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function speechEvaluator() {
+        return $this->belongsTo('App\Models\User', 'evaluator', 'id');
+    }
+
     public function displayScore() {
         return $this->point->category->name . ' : ' . $this->point_value . ' points';
     }

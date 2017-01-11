@@ -6,7 +6,9 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         processIsolation="false"
+         processIsolation="true"
+         verbose="true"
+         debug="true"
          stopOnFailure="false">
     <testsuites>
         <testsuite name="Application Test Suite">

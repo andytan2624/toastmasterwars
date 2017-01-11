@@ -47,6 +47,10 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at'];
 
+    public function __toString()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
 
     public function getFullNameAttribute()
     {
