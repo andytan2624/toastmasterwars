@@ -129,7 +129,7 @@ class ScoreController extends Controller
         /**
          * If the point category is the custom, use the point value inputted from the form
          */
-        if ($point->category_id = config('constants.custom_point_category_id')) {
+        if ($point->category_id = config('constants.categories.custom_point_category_id')) {
             $input['point_value'] = $input['custom_point_value'];
         } else {
             $input['point_value'] = $point->point_value;

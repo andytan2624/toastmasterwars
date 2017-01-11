@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use App\Models\Club;
+use App\Models\Score;
 use App\Models\User;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ToastmasterWars\Components\MeetingComponent;
+use App\ToastmasterWars\Components\ScoreComponent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,7 +23,12 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        //
+        // Get list of all meetings
+        $meetings = Meeting::with('club', 'chairmanUser', 'serjeantAtArmsUser', 'secretaryUser')
+            ->where('deleted_at', '=', null)
+            ->get();
+
+        return view('meetings.index', compact('meetings'));
     }
 
     /**
@@ -71,7 +78,26 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        //
+        // Array to house other configurations other parts of the page will need
+        $otherDetails = [];
+
+        $meeting = Meeting::findOrFail($id);
+
+        $meetingComponent = new MeetingComponent($meeting);
+        $scoreComponent = new ScoreComponent();
+
+        $previousMeetings = Meeting::where('id', '<', $id)->orderBy('meeting_number', 'desc')->limit(3)->get();
+        $otherDetails['quorum'] = $meetingComponent->getMeetingQuorum($previousMeetings);
+
+        $scores = Score::with('point', 'point.category', 'user','speechEvaluator')->where('meeting_id', '=', $id)->get()
+            ->groupBy('which_half');
+
+        /**
+         * Process the scores, and return a multidimensional array which groups it by half id, then by category
+         */
+        $scores = $scoreComponent->processScoreForMeetingView($scores);
+
+        return view('meetings.show', compact('meeting', 'scores', 'previousMeetings', 'otherDetails'));
     }
 
     /**

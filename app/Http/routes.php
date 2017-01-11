@@ -40,7 +40,7 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Meetings
     Route::get('meetings', 'MeetingController@index');
     Route::get('meetings/create', 'MeetingController@create');
-    Route::get('meetings/{id}', 'MeetingController@show');
+    Route::get('meetings/{id}', 'MeetingController@show')->name('meeting.show');
     Route::get('meetings/edit/{id}', [ 'as' => 'meetings.edit', 'uses' => 'MeetingController@edit']);
     Route::post('meetings', 'MeetingController@store');
 

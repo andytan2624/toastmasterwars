@@ -11,6 +11,11 @@ class Club extends Model
     //
     protected $table = 'clubs';
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function userClubs() {
         return $this->hasMany(UserClub::class);
     }
