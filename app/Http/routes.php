@@ -31,7 +31,7 @@ Route::post('reporting', 'ReportingController@view')->name('reporting.management
 
 // Meetings
 Route::get('meetings', 'MeetingController@index');
-Route::get('meetings/{id}', 'MeetingController@show')->name('meeting.show');
+Route::get('meetings/{id}/show', 'MeetingController@show')->name('meeting.show');
 
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     // Users

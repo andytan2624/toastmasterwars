@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Meeting;
 use App\Models\Point;
 use App\ToastmasterWars\Components\ReportingComponent;
 use Illuminate\Http\Request;
@@ -30,7 +31,10 @@ class ReportingController extends Controller
             $categoryTitle = $categoryObject->name;
             $reportingComponent = new ReportingComponent();
             $pointScores = $reportingComponent->getPointScores($categoryId);
-            $meetingGraphResults = $reportingComponent->getMeetingGraphData($pointScores);
+
+            // Get a list of all meetings, we just need the ID so we can so how many people scored in each meeting
+            $meetings = Meeting::where('deleted_at', '=', null)->get();
+            $meetingGraphResults = $reportingComponent->getMeetingGraphData($meetings, $pointScores);
             $userGraphResults = array_slice($reportingComponent->getUserGraphData($pointScores), 0 ,15);
         }
 

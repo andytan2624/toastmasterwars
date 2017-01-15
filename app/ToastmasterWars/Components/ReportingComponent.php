@@ -26,7 +26,7 @@ class ReportingComponent {
     }
 
 
-    public function getMeetingGraphData($scores) {
+    public function getMeetingGraphData($meetings, $scores) {
         // Gather the data, don't parse it yet
         $meetingData = [];
 
@@ -39,11 +39,11 @@ class ReportingComponent {
             $meetingData[$meeting['id']][] = $meeting;
         }
 
-        // Now sort the data from highest count to lowest
+        // Traverse through each meeting and set count for each meeting
         $finalData = [];
-        foreach ($meetingData as $meetingID => $data) {
-            $key = "#".$data[0]['meeting_number']." (".$data[0]['meeting_date'].")";
-            $finalData[$key] = count($data);
+        foreach ($meetings as $meeting) {
+            $key = "#".$meeting->meeting_number." (".$meeting->meeting_date.")";
+            $finalData[$key] = isset($meetingData[$meeting->id]) ? count($meetingData[$meeting->id]) : 0;
         }
 
         return $finalData;
