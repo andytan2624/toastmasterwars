@@ -65,7 +65,7 @@ class ScoreController extends Controller
 
         $query = Score::where('created_at', '>=', $start_date." 00:00:00")
             ->where('created_at', '<=', $end_date." 23:59:59")
-            ->where('point_value', '>', 0);
+            ->where('point_value', '!=', 0);
 
         if ($meeting_id != '') {
             $query->where('meeting_id', '=', $meeting_id);
