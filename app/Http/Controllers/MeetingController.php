@@ -64,7 +64,8 @@ class MeetingController extends Controller
         $input['which_half'] = 1;
 
         // Record scores for each user's participation in the meeting
-        $meetingComponent = new MeetingComponent();
+        $meeting = new Meeting();
+        $meetingComponent = new MeetingComponent($meeting);
         $meetingComponent->createMeetingScores($input);
 
         return redirect('/');
