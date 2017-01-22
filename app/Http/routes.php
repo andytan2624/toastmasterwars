@@ -45,6 +45,7 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::get('meetings/create', 'MeetingController@create')->name('meeting.create');
     Route::get('meetings/{id}/edit', 'MeetingController@edit')->name('meetings.edit');
     Route::post('meetings/{id}/edit', 'MeetingController@update')->name('meetings.update');
+    Route::post('meetings/{id}/delete', 'MeetingController@destroy')->name('meetings.delete');
     Route::post('meetings', 'MeetingController@store');
     Route::get('meetings/{meetingId}/editScores/{categoryId}', 'MeetingController@editScores')->name('meetings.editScores');
     Route::post('meetings/{meetingId}/editScores/{categoryId}', 'MeetingController@updateScores')->name('meetings.editScores');

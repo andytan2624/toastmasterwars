@@ -60,14 +60,14 @@ class MeetingController extends Controller
     {
         $input = $request->all();
         $meeting_data = Meeting::create($input);
-        //$input['meeting_id'] = $meeting_data->id;
+        $input['meeting_id'] = $meeting_data->id;
         // Set by default the meeting to be in the 1st half
         $input['which_half'] = 1;
 
         // Record scores for each user's participation in the meeting
-        //$meeting = new Meeting();
-        //$meetingComponent = new MeetingComponent($meeting);
-        //$meetingComponent->createMeetingScores($input);
+        $meeting = new Meeting();
+        $meetingComponent = new MeetingComponent($meeting);
+        $meetingComponent->createMeetingScores($input);
 
         return redirect()->route('meetings.edit',[$meeting_data->id]);
     }
@@ -112,7 +112,6 @@ class MeetingController extends Controller
     {
         $meeting = Meeting::findOrFail($id);
 
-        $meetingComponent = new MeetingComponent($meeting);
         $scoreComponent = new ScoreComponent();
 
         $clubs = Club::lists('name', 'id');
@@ -152,8 +151,8 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
-        $meeting = Meeting::findOrFail($id);
-
+        Meeting::destroy($id);
+        return redirect()->back();
     }
 
     /**

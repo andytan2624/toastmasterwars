@@ -50,7 +50,6 @@
                             {!! Form::text("notes[$half][$score->id]", $score->notes, ['class' => 'form-control']) !!}
                         </td>
                     @endif
-
                     <td>
                         <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-score-{{$score->id}}" value="Delete Score"/>
                     </td>

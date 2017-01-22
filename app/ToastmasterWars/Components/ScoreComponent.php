@@ -82,12 +82,11 @@ class ScoreComponent
                 $speechScore->saveScore();
 
                 // Now lets record the speech evaluation
-
                 $evaluationDetails = [
                     'user_id'     => $input["speech_evaluator_$index"],
                     'point_id'    => $meetingPointSlugs[config('constants.speech_evaluator_point_slug')]->id,
                     'point_value' => $meetingPointSlugs[config('constants.speech_evaluator_point_slug')]->point_value,
-                    'evaluated_speech_id' => $speechScore->id,
+                    'evaluated_speech_id' => $speechScore->score->id,
                 ];
                 $mergedInput = array_merge($input, $evaluationDetails);
                 $score = new RecordScore($mergedInput);
