@@ -7,8 +7,8 @@
             <th>Meeting #</th>
             <th>Date</th>
             <th>Chairman</th>
-            <th>Secretary</th>
             <th>Serjeant At Arms</th>
+            <th>Secretary</th>
             <th></th>
         </thead>
         <tbody>

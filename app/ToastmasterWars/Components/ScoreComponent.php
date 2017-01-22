@@ -2,6 +2,7 @@
 namespace App\ToastmasterWars\Components;
 
 use App\Models\Category;
+use App\Models\Score;
 use App\Models\Scores\RecordScore;
 
 class ScoreComponent
@@ -77,23 +78,18 @@ class ScoreComponent
                     'evaluator' => $input["speech_evaluator_$index"],
                 ];
                 $mergedInput = array_merge($input, $scoreDetails);
-                $score = new RecordScore($mergedInput);
-                $score->saveScore();
-            }
-        }
-    }
+                $speechScore = new RecordScore($mergedInput);
+                $speechScore->saveScore();
 
-    public function recordSpeechEvaluationScores($input, $meetingPointSlugs)
-    {
-        foreach ($input as $pointSlug => $userID) {
-            $input['which_half'] = $pointSlug == "toastmaster_2" ? 2 : $input['which_half'];
-            if (strpos($pointSlug, "speech_evaluator_") !== false && $userID != "") {
-                $scoreDetails = [
-                    'user_id'     => $userID,
+                // Now lets record the speech evaluation
+
+                $evaluationDetails = [
+                    'user_id'     => $input["speech_evaluator_$index"],
                     'point_id'    => $meetingPointSlugs[config('constants.speech_evaluator_point_slug')]->id,
-                    'point_value' => $meetingPointSlugs[config('constants.speech_evaluator_point_slug')]->point_value
+                    'point_value' => $meetingPointSlugs[config('constants.speech_evaluator_point_slug')]->point_value,
+                    'evaluated_speech_id' => $speechScore->id,
                 ];
-                $mergedInput = array_merge($input, $scoreDetails);
+                $mergedInput = array_merge($input, $evaluationDetails);
                 $score = new RecordScore($mergedInput);
                 $score->saveScore();
             }
@@ -150,10 +146,45 @@ class ScoreComponent
                 }
             }
         }
-
         return $scores;
-
     }
+
+    /**
+     * Process scores, so that it creates an array for every category, and each category will have two arrays in it
+     * One to denote the first half and the other for the second half
+     *
+     * checks if a category has no scores for either half, it will create empty collections
+     * Which will make printing out results on template easier so theres no need to deduce if such values exist
+     * @param $scores
+     */
+    public function processScoreForEditingView($scores) {
+
+        $finalOutput = collect([]);
+        // Get a list of the meeting categories in the order they were intended to be
+        $categories = Category::with('points')->where('active', '=', '1')
+            ->orderBy('name')->get();
+        foreach ($categories as $category) {
+            $finalOutput[$category->id] = collect([
+                'categoryDetails' => $category,
+                1 => collect([]),
+                2 => collect([]),
+            ]);
+        }
+
+        foreach ($scores as $category_id => $category_scores) {
+            // Group the half scores by the point type
+            $grouped_scores = $category_scores->groupBy('which_half');
+            if ($grouped_scores->has(1)) {
+                $finalOutput[$category_id][1] = $grouped_scores->get(1);
+            }
+            if ($grouped_scores->has(2)) {
+                $finalOutput[$category_id][2] = $grouped_scores->get(2);
+            }
+        }
+
+        return $finalOutput;
+    }
+
 
 
 }

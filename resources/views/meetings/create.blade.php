@@ -6,42 +6,7 @@
     {!! Form::model($meeting, ['action' => 'MeetingController@store']) !!}
     <h2>First Half</h2>
     <!-- Names should only appear on drop down based on attendance-->
-    <div class="form-group">
-        {!! Form::label('club_id', 'Club:') !!}
-        {!! Form::select('club_id', $clubs, old('club_id'), ['placeholder' => 'Pick a club']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('chairman', 'Chairman:') !!}
-        {!! Form::select('chairman', $users, old('chairman'), ['placeholder' => 'Pick a user']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('serjeant_at_arms', 'Serjeant At Arms:') !!}
-        {!! Form::select('serjeant_at_arms', $users, old('serjeant_at_arms'), ['placeholder' => 'Pick a user']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('secretary', 'Secretary:') !!}
-        {!! Form::select('secretary', $users, old('secretary'), ['placeholder' => 'Pick a user']) !!}
-    </div>
-
-    <!-- Should have the next number of meeting after the last one-->
-    <div class="form-group">
-        {!! Form::label('meeting_number', 'Meeting Number:') !!}
-        {!! Form::text('meeting_number', $nextMeetingID, ['class' => 'form-control']) !!}
-    </div>
-
-    <!-- Calculate the latest date based on month, next Thursday date from the last one -->
-    <div class="form-group">
-        {!! Form::label('meeting_date', 'Meeting Date:') !!}
-        {!! Form::date('meeting_date', old('meeting_date')) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('meeting_start_time', 'Meeting Start Time:') !!}
-        {!! Form::text('meeting_start_time', old('meeting_start_time'), ['class' => 'form-control', 'id' => 'meeting_start_time']) !!}
-    </div>
+    @include('meetings.partials.form')
 
     <div class="form-group">
         {!! Form::label('attendance', 'Attendance:') !!}
@@ -259,12 +224,6 @@
     <div class="form-group">
         {!! Form::label('general_evaluator', 'General Evaluator:') !!}
         {!! Form::select('general_evaluator', $users, old('general_evaluator'), ['placeholder' => 'Pick a user']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('meeting_end_time', 'Meeting End Time:') !!}
-        {!! Form::text('meeting_end_time', old('meeting_end_time'), ['class' => 'form-control', 'id' => 'meeting_end_time']) !!}
-
     </div>
 
     <div class="form-group">

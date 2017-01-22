@@ -34,8 +34,6 @@ class MeetingComponent
         $scoreComponent->recordIndividualScores($input, $meetingPointSlugs);
         $scoreComponent->recordMultipleScores($input, $meetingPointSlugs);
         $scoreComponent->recordSpeechScores($input, $meetingPointSlugs);
-        $scoreComponent->recordSpeechEvaluationScores($input, $meetingPointSlugs);
-
     }
 
     /**
@@ -57,7 +55,7 @@ class MeetingComponent
      * @param $pointID
      * @param $users - Can be array or integer
      */
-    public function saveUsersScore($pointID, $users, $which_half = 1, $notes = '')
+    public function saveUsersScore($pointID, $users, $which_half = 1, $notes = [], $pointValues = [])
     {
 
         // Get the Point Object
@@ -66,19 +64,34 @@ class MeetingComponent
         // If $users is an integer, make it into an integer
         $users = is_int($users) ? [$users] : $users;
 
-        // Create a score record for each user
-        foreach ($users as $user) {
-            $scoreInput = [
-                'user_id'     => $user,
-                'club_id'     => $this->meeting->club_id,
-                'meeting_id'  => $this->meeting->id,
-                'point_id'    => $point->id,
-                'point_value' => $point->point_value,
-                'which_half'  => $which_half,
-                'notes'       => $notes,
-            ];
+        // Do the same for notes, make it into an array of notes
+        $notes = is_string($notes) ? [$notes] : $notes;
 
-            Score::create($scoreInput);
+        // Create a score record for each user
+        foreach ($users as $index => $user) {
+            // If the user is not a valid integer, don't bother saving/updating record
+            if ($user != "") {
+                $scoreDetails = [
+                    'user_id'     => $user,
+                    'club_id'     => $this->meeting->club_id,
+                    'meeting_id'  => $this->meeting->id,
+                    'point_id'    => $point->id,
+                    'which_half'  => $which_half,
+                ];
+
+                $score = Score::firstOrCreate($scoreDetails);
+
+                $updatedDetails = [
+                    'notes' => $notes[$index],
+                    'point_value' => $point->point_value,
+                ];
+                // Only update the point value if there is a value that exist for that index
+                if (isset($pointValues[$index])) {
+                    $updatedDetails['point_value'] = $pointValues[$index];
+                }
+
+                $score->update($updatedDetails);
+            }
         }
     }
 
@@ -87,19 +100,16 @@ class MeetingComponent
      * @param $pointID
      * @param $which_half - If this is blank, get all scores
      */
-    public function getUsersByCategory($pointID, $which_half = '')
+    public function getUsersByCategory($pointID, $sortByHalf = false)
     {
-        $scoreQuery = Score::with('user', 'speechEvaluator')
+        $scores = Score::with('user', 'speechEvaluator')
             ->where('meeting_id', '=', $this->meeting->id)
             ->where('point_id', $pointID)
-            ;
-
-        if ($which_half != '') {
-            $scoreQuery = $scoreQuery->where('which_half', $which_half);
-        }
-
-        $scores = $scoreQuery
             ->get();
+
+        if ($sortByHalf) {
+            $scores = $scores->groupBy('which_half');
+        }
 
         return $scores;
     }
@@ -109,29 +119,49 @@ class MeetingComponent
      * @param $speeches
      * @param $which_half
      */
-    public function addSpeeches($speeches, $which_half) {
+    public function saveSpeechScore($users, $speech_titles, $evaluators, $speaking_times, $which_half) {
 
+        $speechScore = Point::find(config('constants.categories.speech_id'));
         $evaluatorScore = Point::find(config('constants.categories.speech_evaluation_id'));
 
-        // Go through each speech and record the speech record. Also create the
-        // score evaluation record
-        foreach ($speeches as $speech) {
-            $speech['meeting_id'] = $this->meeting->id;
-            $speech['$which_half'] = $which_half;
-            Score::create($speech);
+        // Create a score record for each user
+        foreach ($users as $index => $user) {
+            // If the user is not a valid integer, don't bother saving/updating record
+            if ($user != "") {
+                $scoreDetails = [
+                    'user_id'     => $user,
+                    'club_id'     => $this->meeting->club_id,
+                    'meeting_id'  => $this->meeting->id,
+                    'point_id'    => $speechScore->id,
+                    'point_value' => $speechScore->point_value,
+                    'which_half'  => $which_half,
+                    'is_speech'   => 1,
+                ];
 
+                $score = Score::firstOrCreate($scoreDetails);
+                $score->update([
+                    'speech_title' => $speech_titles[$index],
+                    'evaluator' => $evaluators[$index],
+                    'speaking_time' => $speaking_times[$index],
+                ]);
 
-            $evaluatorInput = [
-                'user_id' => $speech['evaluator'],
-                'club_id' => $speech['club_id'],
-                'meeting_id' => $this->meeting->id,
-                'point_id' => $evaluatorScore->id,
-                'point_value' => $evaluatorScore->point_value,
-                'which_half' => $which_half
-            ];
+                $score->save();
 
-            Score::create($evaluatorInput);
+                // Add/Update score for evaluator classes
+                $evaluationDetails = [
+                    'club_id'     => $this->meeting->club_id,
+                    'meeting_id'  => $this->meeting->id,
+                    'point_id'    => $evaluatorScore->id,
+                    'point_value' => $evaluatorScore->point_value,
+                    'which_half'  => $which_half,
+                    'evaluated_speech_id'  => $score->id, //The id of the speech for this evaluation
+                ];
+                $evaluationScore = Score::firstOrNew($evaluationDetails);
 
+                $evaluationScore->user_id = $evaluators[$index];
+
+                $evaluationScore->save();
+            }
         }
     }
 
@@ -152,4 +182,8 @@ class MeetingComponent
 
         return "[{(" . implode(' + ', $meetingAttendanceArray) . ")/3} * 50% + 1] = $quorum";
     }
+
+    /**
+     * Function that processes the input for scores
+     */
 }
