@@ -24,3 +24,5 @@ public/css/*.map
 public/js/*.map
 
 public/components/*
+
+storage/fonts/*

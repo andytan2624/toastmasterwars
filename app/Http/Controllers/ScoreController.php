@@ -63,9 +63,12 @@ class ScoreController extends Controller
 
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
 
-        $query = Score::where('created_at', '>=', $start_date." 00:00:00")
-            ->where('created_at', '<=', $end_date." 23:59:59")
-            ->where('point_value', '!=', 0);
+        $query = Score::with('meeting')
+            ->where('point_value', '!=', 0)
+            ->whereHas('meeting', function($query) use ($start_date, $end_date) {
+                $query->where('meeting_date', '>=', $start_date." 00:00:00");
+                $query->where('meeting_date', '<=', $end_date." 23:59:59");
+            });
 
         if ($meeting_id != '') {
             $query->where('meeting_id', '=', $meeting_id);
