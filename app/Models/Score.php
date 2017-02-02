@@ -9,11 +9,20 @@ use Auth;
 
 class Score extends Model
 {
-    //
+    use SoftDeletes;
+
     protected $table = 'scores';
 
     protected $fillable = ['user_id', 'club_id', 'meeting_id', 'point_id', 'point_value', 'is_speech',
-    'speech_title', 'evaluator', 'notes', 'which_half'];
+    'speech_title', 'evaluator', 'notes', 'which_half', 'evaluated_speech_id', 'speaking_time'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
 
     public function point() {
         return $this->belongsTo('App\Models\Point');

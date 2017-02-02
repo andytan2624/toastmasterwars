@@ -30,7 +30,7 @@ Route::get('reporting', 'ReportingController@view')->name('reporting.management.
 Route::post('reporting', 'ReportingController@view')->name('reporting.management.process');
 
 // Meetings
-Route::get('meetings', 'MeetingController@index');
+Route::get('meetings', 'MeetingController@index')->name('meetings.view');
 Route::get('meetings/{id}/show', 'MeetingController@show')->name('meeting.show');
 
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
@@ -42,9 +42,14 @@ Route::group(['middleware' => 'App\Http\Middleware\SuperAdmin'], function(){
     Route::post('users', 'UserController@store')->name('users.management.store');
 
     // Meetings
-    Route::get('meetings/create', 'MeetingController@create');
-    Route::get('meetings/edit/{id}', [ 'as' => 'meetings.edit', 'uses' => 'MeetingController@edit']);
+    Route::get('meetings/create', 'MeetingController@create')->name('meeting.create');
+    Route::get('meetings/{id}/edit', 'MeetingController@edit')->name('meetings.edit');
+    Route::post('meetings/{id}/edit', 'MeetingController@update')->name('meetings.update');
+    Route::post('meetings/{id}/delete', 'MeetingController@destroy')->name('meetings.delete');
     Route::post('meetings', 'MeetingController@store');
+    Route::get('meetings/{meetingId}/editScores/{categoryId}', 'MeetingController@editScores')->name('meetings.editScores');
+    Route::post('meetings/{meetingId}/editScores/{categoryId}', 'MeetingController@updateScores')->name('meetings.editScores');
+    Route::post('meetings/deleteScore/{scoreId}', 'MeetingController@deleteScore')->name('meetings.deleteScore');
 
     // Scores
     Route::get('scores/create', 'ScoreController@create');

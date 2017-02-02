@@ -10,8 +10,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Meeting extends Model
 {
-    //
+    use SoftDeletes;
+
     protected $table = 'meetings';
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     protected $fillable = ['club_id', 'chairman', 'serjeant_at_arms', 'secretary', 'meeting_number', 'meeting_date', 'meeting_start_time',
     'meeting_end_time', 'theme', 'business_session', 'notes'];

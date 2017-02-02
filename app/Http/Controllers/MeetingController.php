@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Meeting;
 use App\Models\Club;
 use App\Models\Score;
@@ -50,7 +51,7 @@ class MeetingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created meeting in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -68,7 +69,7 @@ class MeetingController extends Controller
         $meetingComponent = new MeetingComponent($meeting);
         $meetingComponent->createMeetingScores($input);
 
-        return redirect('/');
+        return redirect()->route('meetings.edit',[$meeting_data->id]);
     }
 
     /**
@@ -109,7 +110,23 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $meeting = Meeting::findOrFail($id);
+
+        $scoreComponent = new ScoreComponent();
+
+        $clubs = Club::lists('name', 'id');
+        $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
+        $nextMeetingID = '';
+
+        $scores = Score::with('point', 'point.category', 'user','speechEvaluator')->where('meeting_id', '=', $id)->get()
+            ->groupBy('point_id');
+
+        /**
+         * Process the scores, and return a multidimensional array which groups it by category, then half ig
+         */
+        $scores = $scoreComponent->processScoreForEditingView($scores);
+
+        return view('meetings.edit', compact('meeting', 'clubs', 'users', 'nextMeetingID', 'scores'));
     }
 
     /**
@@ -121,7 +138,9 @@ class MeetingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $meeting = Meeting::findOrFail($id);
+        $meeting->fill($request->input())->save();
+        return redirect()->route('meetings.edit', [$id]);
     }
 
     /**
@@ -132,6 +151,76 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Meeting::destroy($id);
+        return redirect()->back();
+    }
+
+    /**
+     * Function that allows a user to edit scores for a particular meeting
+     * @param $meetingId
+     * @param $categoryId
+     */
+    public function editScores($meetingId, $categoryId) {
+        $meeting = Meeting::findOrFail($meetingId);
+        $category = Category::findOrFail($categoryId);
+
+        $meetingComponent = new MeetingComponent($meeting);
+        $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
+
+        // Get scores, and group by both half
+        $scores = $meetingComponent->getUsersByCategory($category->id, true);
+
+        return view('meetings.editScores', compact('meeting', 'category', 'scores', 'users', 'editPartial'));
+    }
+
+    /**
+     * Function that allows updates the scores and users for a certain category for a meeting
+     * @param $meetingId
+     * @param $categoryId
+     */
+    public function updateScores(Request $request, $meetingId, $categoryId) {
+        $meeting = Meeting::findOrFail($meetingId);
+        $meetingComponent = new MeetingComponent($meeting);
+
+        $input = $request->all();
+
+        // For each half, process the scores
+        for ($half = 1; $half <= 2; $half++) {
+            if ($categoryId == config('constants.categories.speech_id')) {
+                $meetingComponent->saveSpeechScore(
+                    $input['users'][$half],
+                    $input['speech_titles'][$half],
+                    $input['evaluators'][$half],
+                    $input['speaking_times'][$half],
+                    $half
+                );
+            } else {
+                // Only used by custom scores so we can modify the point values if we need to
+                $pointValues = isset($input['point_values']) ? $input['point_values'][$half] : [];
+
+                $meetingComponent->saveUsersScore($categoryId, $input['users'][$half], $half, $input['notes'][$half], $pointValues);
+            }
+        }
+
+        return redirect()->route('meetings.editScores',['meetingId' => $meetingId, 'categoryId' => $categoryId]);
+
+    }
+
+    /**
+     * Function that will delete a score for a particular meeting
+     * @param $meetingId
+     * @param $scoreId
+     */
+    public function deleteScore($scoreId) {
+        // If the score is a speech, we need to delete the evaluation score associated with it
+        $score = Score::findOrFail($scoreId);
+        if ($score->point_id == config('constants.categories.speech_id')) {
+            Score::where('evaluated_speech_id', '=', $score->id)->delete();
+        }
+
+        // Then destroy the score itself
+        Score::destroy($scoreId);
+
+        return redirect()->back();
     }
 }
