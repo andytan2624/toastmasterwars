@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                Toastmaster Wars
+                Game of Toasts
             </a>
         </div>
 
