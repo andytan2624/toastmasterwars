@@ -48,8 +48,8 @@ class UserController extends Controller
     {
         $user = new User;
 
-        $clubs = Club::lists('name', 'id');
-        $executive_roles = ExecutiveRole::lists('name', 'id');
+        $clubs = Club::pluck('name', 'id');
+        $executive_roles = ExecutiveRole::pluck('name', 'id');
 
         return view('users.create', compact('user', 'clubs', 'executive_roles'));
     }
@@ -84,7 +84,7 @@ class UserController extends Controller
     {
 
         $user = User::find($id);
-        $clubs = Club::lists('name', 'id');
+        $clubs = Club::pluck('name', 'id');
 
         $relatedClubs = $user->clubs()->getRelatedIds()->toArray();
 

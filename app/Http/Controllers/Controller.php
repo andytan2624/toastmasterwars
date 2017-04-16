@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $statusCode = 200;
 

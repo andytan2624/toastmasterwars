@@ -40,7 +40,7 @@ class MeetingController extends Controller
     public function create()
     {
         $meeting = new Meeting;
-        $clubs = Club::lists('name', 'id');
+        $clubs = Club::pluck('name', 'id');
         // Get the last meeting
         $previousMeetingID = Meeting::orderby('id', 'desc')->first()->meeting_number;
         $nextMeetingID = $previousMeetingID + 1;
@@ -114,7 +114,7 @@ class MeetingController extends Controller
 
         $scoreComponent = new ScoreComponent();
 
-        $clubs = Club::lists('name', 'id');
+        $clubs = Club::pluck('name', 'id');
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
         $nextMeetingID = '';
 

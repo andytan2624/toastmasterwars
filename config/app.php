@@ -14,6 +14,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'name' => 'Game of Toasts',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,6 +148,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
 
 
         /*
@@ -156,6 +158,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
 
         /*
          * Other Providers

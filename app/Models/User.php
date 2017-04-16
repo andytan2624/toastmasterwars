@@ -2,13 +2,14 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
 
-    use SearchableTrait, SoftDeletes;
+    use SearchableTrait, SoftDeletes, Notifiable;
     /**
      * The attributes that are mass assignable.
      *

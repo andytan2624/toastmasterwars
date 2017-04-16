@@ -106,7 +106,7 @@ class ScoreController extends Controller
     {
         $score = new Score();
 
-        $clubs = Club::lists('name', 'id');
+        $clubs = Club::pluck('name', 'id');
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
         $points = Point::all()->sortBy('category.name')->pluck('full_name', 'id');
         $meetings = Meeting::all()->sortByDesc('id')->pluck('full_name', 'id');
