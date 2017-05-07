@@ -25,6 +25,7 @@ Route::get('users/display/{id}', 'UserController@show');
 
 // Score
 Route::get('scores', 'ScoreController@index');
+Route::get('scores/breakdown', 'ScoreController@breakdown');
 
 // Reporting
 Route::get('reporting', 'ReportingController@view')->name('reporting.management.view');

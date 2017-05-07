@@ -23,9 +23,10 @@
                 <li><a href="{{ route('users.view') }}">Users</a></li>
                 <li><a href="{{ url('/reporting') }}">Reporting</a></li>
                 <li><a href="{{ url('/meetings') }}">Meetings</a></li>
-            @if (isSuperAdminUser())
+                @if (isSuperAdminUser())
                     <li><a href="{{ url('/points') }}">Points</a></li>
                 @endif
+                <li><a href="{{ url('/scores/breakdown') }}">Breakdown</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
