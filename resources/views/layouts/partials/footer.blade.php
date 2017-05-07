@@ -6,10 +6,6 @@
 
 @yield('modals')
 
-<!-- JavaScripts -->
-{!! Html::script('/components/jquery/dist/jquery.min.js') !!}
-{!! Html::script('/components/bootstrap/dist/js/bootstrap.min.js') !!}
-
 @yield('js_scripts')
 
 </body>
