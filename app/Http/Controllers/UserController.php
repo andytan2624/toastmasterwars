@@ -86,9 +86,7 @@ class UserController extends Controller
         $user = User::find($id);
         $clubs = Club::pluck('name', 'id');
 
-        $relatedClubs = $user->clubs()->getRelatedIds()->toArray();
-
-        return view('users.edit', compact('user', 'clubs', 'relatedClubs'));
+        return view('users.edit', compact('user', 'clubs'));
     }
 
     /**
