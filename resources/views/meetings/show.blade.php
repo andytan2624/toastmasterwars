@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <p>
-                    {{ $meeting->business_session ?: 'Business session was not run on the day' }}
+                    {!! $meeting->business_session ?: 'Business session was not run on the day' !!}
                 </p>
             </div>
         </div>
