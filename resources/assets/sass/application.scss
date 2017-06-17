@@ -82,3 +82,77 @@ Login Form
   background:#fff;
   color: $third;
 }
+
+.btn-primary {
+  background-color: $primary;
+}
+
+.table {
+  thead {
+    th {
+      background-color: $third;
+      color: #fff;
+      font-size: 20px;
+      padding: 30px 40px;
+      text-align: center;
+    }
+  }
+  tbody {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-color: $secondary;
+  background-color: $secondary;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: $white;
+  $background-color: $secondary;
+  border-color: $secondary;
+
+  .fact {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .huge {
+    font-size: 40px;
+  }
+}
+
+h1.title {
+  position: relative;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #444;
+  padding-left: .5em;
+  margin: .8em 0;
+  &:before {
+    left: 0;
+    left: 10px;
+    top: 17%;
+    height: 72%;
+    width: 4px;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 10px;
+    height: 80%;
+    background: #772432;
+  }
+}

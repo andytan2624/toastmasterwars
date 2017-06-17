@@ -12,6 +12,11 @@
         crossorigin="anonymous">
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"
+        integrity="sha256-urCxMaTtyuE8UK5XeVYuQbm/MhnXflqZ/B9AOkyTguo=" crossorigin="anonymous"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
 @yield('js_scripts')
 
 

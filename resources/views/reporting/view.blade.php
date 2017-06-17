@@ -34,40 +34,8 @@
     {!! Html::script('/components/highcharts/highcharts.js') !!}
     {!! Html::script('/js/reporting.js') !!}
 
-    @if (count($meetingGraphResults) > 0 || count($userGraphResults) > 0)
+    @if (count($userGraphResults) > 0)
     <script type="text/javascript">
-        // Meeting Graph
-        $(function () {
-            Highcharts.chart('meetingGraph', {
-                title: {
-                    text: 'Club Performance - {{ $categoryTitle }}',
-                    x: -20 //center
-                },
-                xAxis: {
-                    categories: [
-                        <?php
-                        echo '"' . implode('","', array_keys($meetingGraphResults)) . '"';
-                        ?>
-                    ]
-                },
-                yAxis: {
-                    title: {
-                        text: 'Number of People'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                series: [{
-                    name: 'Persons',
-                    data: [
-                        {{ implode(",", $meetingGraphResults) }}
-                    ]
-                }]
-            });
-        });
 
         // User Graph
         $(function () {

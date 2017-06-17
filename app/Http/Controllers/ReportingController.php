@@ -20,7 +20,6 @@ class ReportingController extends Controller
      */
     public function view(Request $request) {
 
-        $meetingGraphResults = [];
         $userGraphResults = [];
         $categoryTitle = '';
 
@@ -32,9 +31,6 @@ class ReportingController extends Controller
             $reportingComponent = new ReportingComponent();
             $pointScores = $reportingComponent->getPointScores($categoryId);
 
-            // Get a list of all meetings, we just need the ID so we can so how many people scored in each meeting
-            $meetings = Meeting::where('deleted_at', '=', null)->get();
-            $meetingGraphResults = $reportingComponent->getMeetingGraphData($meetings, $pointScores);
             $userGraphResults = array_slice($reportingComponent->getUserGraphData($pointScores), 0 ,15);
         }
 
@@ -47,7 +43,7 @@ class ReportingController extends Controller
             ->orderBy('meeting_order')
             ->get()->toArray();
 
-        return view('reporting.view', compact('categories', 'categoryTitle', 'meetingGraphResults', 'userGraphResults'));
+        return view('reporting.view', compact('categories', 'categoryTitle', 'userGraphResults'));
     }
 
     /**

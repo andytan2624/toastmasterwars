@@ -59,6 +59,9 @@ class ScoreController extends Controller
             $current_year = date('Y');
             $start_date = $current_year.'-'.$quarter_dates['start_date'];
             $end_date = $current_year.'-'.$quarter_dates['end_date'];
+        } else {
+            $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d 00:00:00');
+            $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d 23:59:59');
         }
 
         $users = User::all()->sortBy('full_name')->pluck('full_name', 'id');
@@ -66,8 +69,8 @@ class ScoreController extends Controller
         $query = Score::with('meeting')
             ->where('point_value', '!=', 0)
             ->whereHas('meeting', function($query) use ($start_date, $end_date) {
-                $query->where('meeting_date', '>=', $start_date." 00:00:00");
-                $query->where('meeting_date', '<=', $end_date." 23:59:59");
+                $query->where('meeting_date', '>=', $start_date);
+                $query->where('meeting_date', '<=', $end_date);
             });
 
         if ($meeting_id != '') {
@@ -77,24 +80,46 @@ class ScoreController extends Controller
         $scores = $query->get();
 
         $tallyArray = array();
-        $currentScores = array();
+        $userData = array();
+        $meetingData = array();
 
         foreach ($users as $id => $user) {
             $tallyArray[$id] = 0;
-            $currentScores[$id] = array();
+            $userData[$id] = array(
+                'speechCount' => 0,
+                'meetingsAttended' => 0,
+                'speechEvaluations' => 0,
+            );
         }
 
         foreach ($scores as $score) {
             $tallyArray[$score->user_id] += $score->point_value;
+            if (!isset($meetingData[$score->meeting_id])) {
+                $meetingData[$meetings->get($score->meeting_id)] = 0;
+            }
         }
 
         foreach ($scores as $score) {
-            $currentScores[$score->user_id][] = $score->displayScore();
+            if ($score['point_id'] == config('constants.categories.attendance_id')) {
+                $userData[$score->user_id]['meetingsAttended']++;
+                $meetingData[$meetings->get($score->meeting_id)]++;
+
+            }
+            if ($score['point_id'] == config('constants.categories.speech_id')) {
+                $userData[$score->user_id]['speechCount']++;
+            }
+            if ($score['point_id'] == config('constants.categories.speech_evaluation_id')) {
+                $userData[$score->user_id]['speechEvaluations']++;
+            }
+
         }
 
         arsort($tallyArray);
 
-        return view('scores.dashboard', compact('users', 'tallyArray', 'currentScores', 'meetings'));
+        $prettyStartDate = Carbon::parse($start_date)->format('d/m/Y');
+        $prettyEndDate = Carbon::parse($end_date)->format('d/m/Y');
+
+        return view('scores.dashboard', compact('users', 'tallyArray', 'userData', 'meetings', 'meetingData', 'prettyStartDate', 'prettyEndDate'));
     }
 
     /**

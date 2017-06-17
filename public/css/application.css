@@ -66,4 +66,60 @@ Login Form
   background: #fff;
   color: #004165; }
 
+.btn-primary {
+  background-color: #892c3b; }
+
+.table thead th {
+  background-color: #004165;
+  color: #fff;
+  font-size: 20px;
+  padding: 30px 40px;
+  text-align: center; }
+
+.table tbody td {
+  text-align: center; }
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  border-color: #A9B2B1;
+  background-color: #A9B2B1; }
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: #FFFFFF;
+  border-color: #A9B2B1; }
+  .panel-heading .fact {
+    margin: 0 auto;
+    text-align: center; }
+  .panel-heading .huge {
+    font-size: 40px; }
+
+h1.title {
+  position: relative;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #444;
+  padding-left: .5em;
+  margin: .8em 0; }
+  h1.title:before {
+    left: 0;
+    left: 10px;
+    top: 17%;
+    height: 72%;
+    width: 4px;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 10px;
+    height: 80%;
+    background: #772432; }
+
 /*# sourceMappingURL=application.css.map */
