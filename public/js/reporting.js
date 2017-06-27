@@ -1,6 +1,7 @@
 var reportingModule = (function () {
     var init = function() {
         $('.category-radio-button').click( function(e) { submitReportingForm(this) } );
+
     };
 
     var submitReportingForm = function(e) {
@@ -14,3 +15,4 @@ var reportingModule = (function () {
 })();
 
 reportingModule.init();
+//# sourceMappingURL=reporting.js.map

@@ -1,0 +1,176 @@
+$primary: #892c3b;
+$secondary: #A9B2B1;
+$third: #004165;
+
+$primary-hover: #6a202c;
+
+$yellow: #F2DF74;
+$white: #FFFFFF;
+$black: #000000;
+$red: #CD202C;
+
+body {
+  padding-top: 70px;
+}
+
+footer {
+  padding: 30px 0;
+}
+
+nav {
+  background-color: $primary;
+}
+
+/** *
+Login Form
+ */
+.nb-login{
+  max-width:300px;
+  margin:30px auto;
+  background: $yellow;
+  padding:20px 25px;
+  border-radius:2px;
+}
+.nb-login h3{
+  font-size:13px;
+  line-height:13px;
+  margin:15px 0px 25px 0px;
+  text-transform:uppercase;
+  color:#fff;
+}
+.nb-login form{
+  margin-bottom:15px;
+  color:#fff;
+}
+.nb-login form input,
+.nb-login form textarea{
+  box-shadow:none !important;
+  padding:6px 5px;
+  color:#fff;
+  border:0px;
+  border-bottom:1px solid rgba(255,255,255,0.5);
+  background:transparent;
+  border-radius:0px;
+}
+.nb-login form input:focus{
+  background: rgba(255,255,255,0.05);
+}
+.nb-login form ::-webkit-input-placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.nb-login form ::-moz-placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.nb-login form :-ms-input-placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.nb-login form .btn{
+  border:0px;
+  border-radius:25px;
+  padding:10px 20px;
+  border:1px solid rgba(255,255,255,0.5);
+  color: $white;
+  background: $third;
+  text-transform:uppercase;
+  font-weight:600;
+  margin-top:15px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.nb-login form .btn:hover{
+  background:#fff;
+  color: $third;
+}
+
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+  &:hover {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+}
+
+.table {
+  thead {
+    th {
+      background-color: $third;
+      color: #fff;
+      font-size: 20px;
+      padding: 30px 40px;
+      text-align: center;
+    }
+  }
+  tbody {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-color: $secondary;
+  background-color: $secondary;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: $white;
+  $background-color: $secondary;
+  border-color: $secondary;
+
+  .fact {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .huge {
+    font-size: 40px;
+  }
+}
+
+h1.title {
+  position: relative;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #444;
+  padding-left: .5em;
+  margin: .8em 0;
+  &:before {
+    left: 0;
+    left: 10px;
+    top: 17%;
+    height: 72%;
+    width: 4px;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 10px;
+    height: 80%;
+    background: #772432;
+  }
+}
+
+.list-group-item {
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}

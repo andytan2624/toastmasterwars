@@ -3,43 +3,87 @@
 @section('content')
 
     {!! Form::open(array('url' => '/', 'method' => 'post')) !!}
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="input-group date" data-provide="datepicker">
-                Start Date:
-                {!! Form::date('start_date', old('start_date'), [
-                    'class' => 'form-control',
-                ]) !!}
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="input-group date" data-provide="datepicker">
-                End Date:
-                {!! Form::date('end_date', old('end_date'), [
-                    'class' => 'form-control',
-                ]) !!}
-            </div>
-        </div>
 
-        <div class="col-sm-4">
-            Meeting
-            <div>
-                {!! Form::select('meeting_id', $meetings, old('meeting_id'), ['placeholder' => 'Pick a meeting...']) !!}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Start Date</button>
+                </span>
+                {!! Form::text('start_date', old('start_date'), ['class' => 'form-control datepicker' ]) !!}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">End Date</button>
+                </span>
+                {!! Form::text('end_date', old('end_date'), [
+                    'class' => 'form-control datepicker',
+                ]) !!}            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Meeting</button>
+                </span>
+                {!! Form::select('meeting_id', $meetings->take(10), old('meeting_id'), ['placeholder' => 'Pick a meeting...']) !!}
             </div>
         </div>
     </div>
-    <div class="row top-buffer">
-        <div class="col-sm-offset-4 col-sm-4">
+
+    <div class="row pt-2">
+        <div class="offset-lg-4 col-lg-4">
             <input type="submit" value="Submit" class="btn btn-primary">
         </div>
     </div>
+
     {!! Form::close() !!}
 
     <hr/>
+
+    <div>
+        <div class="col-lg-12 pagehead">
+            <h1 class="title">Scoreboard: ({{ $prettyStartDate }}) - ({{ $prettyEndDate }}) </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 fact">
+                            <div class="huge">{{ count($meetingData) }}</div>
+                            <div># of Meetings</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 fact">
+                            <div class="huge">{{ round(array_sum($meetingData) / count($meetingData), 2) }}</div>
+                            <div>Average Attendance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="attendance-graph"></div>
+        </div>
+    </div>
+
     <table class="table table-striped table-bordered table-condensed">
         <thead>
         <th>Rank</th>
         <th>Toastmaster</th>
+        <th>Attendance</th>
+        <th>Speech</th>
+        <th>Evaluation</th>
         <th>Score</th>
         </thead>
         <tbody>
@@ -49,6 +93,9 @@
                 <tr>
                     <td>{{ $rank }}</td>
                     <td>{{ $users[$user_id]}}</td>
+                    <td>{{ $userData[$user_id]['meetingsAttended']}}</td>
+                    <td>{{ $userData[$user_id]['speechCount']}}</td>
+                    <td>{{ $userData[$user_id]['speechEvaluations']}}</td>
                     <td>{{ $score }} </td>
                 </tr>
             @endif
@@ -58,38 +105,48 @@
     </table>
 
 
-    <table class="table table-striped table-bordered table-condensed">
-        <thead>
-        <th>Toastmaster</th>
-        <th>Points Breakdown</th>
-        </thead>
-        <tbody>
-        <?php
-        foreach ($currentScores as $user_id => $data) {
-        if (count($data) > 0) {
-        ?>
-        <tr>
-            <td><?= $users[$user_id] ?> </td>
-            <td>
-                <ul>
-                    <?php
-                    foreach ($data as $reason) {
-                    ?>
-                    <li><?= $reason; ?></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
-            </td>
-        </tr>
-        <?php
-        }
-        }
-        ?>
-        </tbody>
-    </table>
+
 @stop
 
 @section('js_scripts')
-    {!! Html::script('/components/parsleyjs/dist/parsley.js') !!}
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            maxViewMode: 2,
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        Highcharts.chart('attendance-graph', {
+
+            title: {
+                text: 'Attendance Per Meeting'
+            },
+
+            xAxis: {
+                categories: [
+                    <?php
+                    echo '"' . implode('","', array_keys($meetingData)) . '"';
+                    ?>
+                ]
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Attendance'
+                }
+            },
+
+            series: [{
+                name: 'Installation',
+                data: [ {{ implode(",", $meetingData) }} ]
+            }]
+
+        });
+    </script>
+
+
+
 @endsection

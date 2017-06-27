@@ -9,9 +9,13 @@ class ReportingComponent {
      * For a category, return an array of
      * @param $pointId
      */
-    public function getPointScores($pointId) {
+    public function getPointScores($pointId, $startDate, $endDate) {
         $scores = Score::with('meeting', 'user')
             ->where('point_id', $pointId)
+            ->whereHas('meeting', function($query) use ($startDate, $endDate) {
+                $query->where('meeting_date', '>=', $startDate);
+                $query->where('meeting_date', '<=', $endDate);
+            })
             ->get()->toArray();
 
         return $scores;
@@ -49,7 +53,7 @@ class ReportingComponent {
         return $finalData;
     }
 
-    public function getUserGraphData($scores) {
+    public function getUserData($scores) {
         // Gather the data, don't parse it yet
         $userData = [];
 

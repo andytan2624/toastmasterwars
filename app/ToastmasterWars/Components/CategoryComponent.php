@@ -23,6 +23,7 @@ class CategoryComponent
         return $points;
     }
 
+
     /**
      * Get list of categories and their respective point value
      * @return array

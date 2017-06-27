@@ -12,7 +12,7 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss', './public/css/app.css');
+    mix.sass('application.scss', './public/css/application.css');
 
     mix.scripts('meetings.js', 'public/js/meetings.js');
 

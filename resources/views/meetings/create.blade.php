@@ -234,8 +234,11 @@
 @stop
 
 @section('js_scripts')
-    {!! Html::script('/components/typeahead.js/dist/typeahead.bundle.min.js') !!}
-    {!! Html::script('/components/moment/min/moment.min.js') !!}
-    {!! Html::script('/components/bootstrap-timepicker/js/bootstrap-timepicker.js') !!}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.1.1/typeahead.bundle.min.js"
+            integrity="sha256-ZA+bBTKKj2rKgqw96IjkkZazTWUbroOtZxrzF1ww02A="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
     {!! Html::script('/js/meetings.js') !!}
 @endsection
