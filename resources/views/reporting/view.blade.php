@@ -1,92 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
+    {!! Form::open(['route' => 'reporting.management.process']) !!}
     <div class="row">
-        <div class="col-lg-3">
-            <ul class="list-group">
-                {!! Form::open(['route' => 'reporting.management.process']) !!}
-                @foreach ($categories as $category)
-                    <li class="list-group-item">
-                        <div class="radio">
-                            <label><input class="category-radio-button" type="radio" name="category_id" value="{{ $category['latest_point']['id'] }}">{{ $category['name'] }}</label>
-                        </div>
-                    </li>
-                @endforeach
-                {!! Form::close() !!}
-            </ul>
-        </div>
-        <div class="col-lg-9">
+        <div class="offset-lg-4 col-lg-12">
             <div class="row">
-                <div class="col-lg-12">
-                    <div id="userGraph"></div>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Start Date</button>
+                </span>
+                        {!! Form::text('start_date', old('start_date'), [
+                            'class' => 'form-control datepicker',
+                            'id'    => 'reportStartDate'
+                        ]) !!}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div id="meetingGraph"></div>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">End Date</button>
+                </span>
+                        {!! Form::text('end_date', old('end_date'), [
+                            'class' => 'form-control datepicker',
+                            'id'    => 'reportEndDate'
+                        ]) !!}            </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <ul class="list-group">
+                @foreach ($categories as $category)
+                    <li class="list-group-item">
+                        <div class="radio">
+                            <label>
+                                {!! Form::radio('category_id', $category['latest_point']['id'], false, [ 'class' => 'category-radio-button']) !!} {{ $category['name'] }}
+                            </label>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-12 mt-2">
+                    @if (count($userResults) > 0)
+                        <h2 class="text-center">{{ $categoryTitle }} Rankings</h2>
+                        <table class="table table-striped table-bordered table-condensed">
+                            <thead>
+                            <th>Rank</th>
+                            <th>Toastmaster</th>
+                            <th>Count</th>
+                            </thead>
+                            <tbody>
+                            <?php $rank = 1; ?>
+                            @foreach($userResults as $userData)
+                                <tr>
+                                    <td>{{ $rank }}</td>
+                                    <td>{{ $userData['name']}}</td>
+                                    <td>{{ $userData['count']}}</td>
+                                </tr>
+                                <?php $rank ++; ?>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    {!! Form::close() !!}
 @stop
 
 @section('js_scripts')
-    {!! Html::script('/components/highcharts/highcharts.js') !!}
     {!! Html::script('/js/reporting.js') !!}
 
-    @if (count($userGraphResults) > 0)
     <script type="text/javascript">
-
-        // User Graph
-        $(function () {
-            Highcharts.chart('userGraph', {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Top 20 Toastmasters - {{ $categoryTitle }}'
-                },
-                xAxis: {
-                    categories: [
-                        <?php
-                        $nameData = [];
-                        foreach ($userGraphResults as $userID => $userData) {
-                            $nameData[] = $userData['name'];
-                        }
-                        echo '"' . implode('","', $nameData) . '"';
-                        ?>
-                    ]
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Number times doing the role',
-                    },
-                },
-                plotOptions: {
-                    bar: {
-                        dataLabels: {
-                            enabled: true
-                        }
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Toastmasters',
-                    data: [
-                        <?php
-                        $countData = [];
-                        foreach ($userGraphResults as $userID => $userData) {
-                            $countData[] = $userData['count'];
-                        }
-                        echo implode(',', $countData);
-                        ?>
-                    ]
-                }]
-            });
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            maxViewMode: 2,
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true
         });
+
+        $("#reportStartDate").datepicker("update", '{{ $start_date }}');
+        $("#reportEndDate").datepicker("update", '{{ $end_date }}');
     </script>
-    @endif
 @stop

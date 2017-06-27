@@ -67,7 +67,11 @@ Login Form
   color: #004165; }
 
 .btn-primary {
-  background-color: #892c3b; }
+  background-color: #892c3b;
+  border-color: #892c3b; }
+  .btn-primary:hover {
+    background-color: #6a202c;
+    border-color: #6a202c; }
 
 .table thead th {
   background-color: #004165;

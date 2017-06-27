@@ -5,10 +5,10 @@
     <td>{{ $meeting->serjeantAtArmsUser->getFullNameAttribute() }}</td>
     <td>{{ $meeting->secretaryUser->getFullNameAttribute() }}</td>
     <td>
-        {{ link_to_route('meeting.show', 'View', ['id' => $meeting->id], ['class' => 'btn btn-primary']) }}
+        {{ link_to_route('meeting.show', 'View', ['id' => $meeting->id], ['class' => 'm-1 btn btn-primary']) }}
         @if (isSuperAdminUser())
-            {{ link_to_route('meetings.edit', 'Edit', ['id' => $meeting->id], ['class' => 'btn btn-success']) }}
-            <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-meeting-{{$meeting->id}}" value="Delete"/>
+            {{ link_to_route('meetings.edit', 'Edit', ['id' => $meeting->id], ['class' => 'm-1 btn btn-success']) }}
+            <input type="button" class="m-1 btn btn-danger" data-toggle="modal" data-target="#remove-meeting-{{$meeting->id}}" value="Delete"/>
         @endif
     </td>
 </tr>

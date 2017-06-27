@@ -22,4 +22,18 @@ class CategoryComponent
             ->get();
         return $points;
     }
+
+
+    /**
+     * Get list of categories and their respective point value
+     * @return array
+     */
+    public static function getAllMeetingCategories() {
+        $categories = DB::table('points')
+            ->join('categories' , 'points.category_id', '=', 'categories.id')
+            ->orderByDesc('points.point_value')
+            ->select('points.id', 'points.point_value', 'categories.name')
+            ->get();
+        return $categories;
+    }
 }

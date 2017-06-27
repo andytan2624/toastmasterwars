@@ -2,6 +2,8 @@ $primary: #892c3b;
 $secondary: #A9B2B1;
 $third: #004165;
 
+$primary-hover: #6a202c;
+
 $yellow: #F2DF74;
 $white: #FFFFFF;
 $black: #000000;
@@ -85,6 +87,11 @@ Login Form
 
 .btn-primary {
   background-color: $primary;
+  border-color: $primary;
+  &:hover {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
 }
 
 .table {
@@ -154,5 +161,16 @@ h1.title {
     width: 10px;
     height: 80%;
     background: #772432;
+  }
+}
+
+.list-group-item {
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }

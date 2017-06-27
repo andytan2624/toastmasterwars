@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ToastmasterWars\Components\CategoryComponent;
 use App\ToastmasterWars\Transformers\ScoreTransformer;
 use App\Models\Score;
 use App\Models\User;
@@ -221,5 +222,13 @@ class ScoreController extends Controller
 
     }
 
+    /**
+     * Breaks down the score categories
+     */
+    public function breakdown()
+    {
+        $meetingCategories = CategoryComponent::getAllMeetingCategories();
+        return view('scores.breakdown', compact('meetingCategories'));
+    }
 
 }

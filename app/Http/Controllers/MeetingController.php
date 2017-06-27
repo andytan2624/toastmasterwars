@@ -27,6 +27,7 @@ class MeetingController extends Controller
         // Get list of all meetings
         $meetings = Meeting::with('club', 'chairmanUser', 'serjeantAtArmsUser', 'secretaryUser')
             ->where('deleted_at', '=', null)
+            ->orderBy('id', 'DESC')
             ->get();
 
         return view('meetings.index', compact('meetings'));

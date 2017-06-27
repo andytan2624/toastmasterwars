@@ -15,11 +15,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/meetings') }}">Meetings</a>
             </li>
-            @if (isSuperAdminUser())
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/points') }}">Points</a>
-                </li>
-            @endif
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/scores/breakdown') }}">Breakdown</a>
+            </li>
         </ul>
         <ul class="navbar-nav navbar-right">
             <!-- Authentication Links -->
