@@ -90,6 +90,8 @@ class ScoreController extends Controller
                 'speechCount' => 0,
                 'meetingsAttended' => 0,
                 'speechEvaluations' => 0,
+                'manualsCompleted' => 0,
+                'enteredCompetition' => 0,
             );
         }
 
@@ -106,11 +108,24 @@ class ScoreController extends Controller
                 $meetingData[$meetings->get($score->meeting_id)]++;
 
             }
-            if ($score['point_id'] == config('constants.categories.speech_id')) {
+            if ($score['point_id'] == config('constants.categories.speech_id') ||
+                $score['point_id'] == config('constants.categories.speech_outside_id')
+            ) {
                 $userData[$score->user_id]['speechCount']++;
             }
-            if ($score['point_id'] == config('constants.categories.speech_evaluation_id')) {
+            if ($score['point_id'] == config('constants.categories.speech_evaluation_id') ||
+                $score['point_id'] == config('constants.categories.table_topics_evaluation_id')) {
                 $userData[$score->user_id]['speechEvaluations']++;
+            }
+
+            if ($score['point_id'] == config('constants.categories.finishing_cc_id') ||
+                $score['point_id'] == config('constants.categories.finishing_cl_id')) {
+                $userData[$score->user_id]['manualsCompleted']++;
+            }
+
+            if ($score['point_id'] == config('constants.categories.competing_club_contest_id') ||
+                $score['point_id'] == config('constants.categories.compete_outside_contest_id')) {
+                $userData[$score->user_id]['enteredCompetition']++;
             }
 
         }

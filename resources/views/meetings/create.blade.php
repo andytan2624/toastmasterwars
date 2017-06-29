@@ -46,12 +46,12 @@
 
     <div class="form-group">
         {!! Form::label('riddle_master', 'Riddle Master:') !!}
-        {!! Form::select('riddle_master', $users, old('riddle_master'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('riddle_master', $users, old('riddle_master'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
     <!-- Word of the Day -->
     <div class="form-group">
         {!! Form::label('grammarian', 'Grammarian:') !!}
-        {!! Form::select('grammarian', $users, old('grammarian'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('grammarian', $users, old('grammarian'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
     <div class="form-group">
         {!! Form::label('word_of_the_day', 'Word of the Day:') !!}
@@ -60,19 +60,19 @@
 
     <div class="form-group">
         {!! Form::label('toast', 'Toast:') !!}
-        {!! Form::select('toast', $users, old('toast'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('toast', $users, old('toast'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <!-- Note to include who is Toastmaster-->
     <div class="form-group">
         {!! Form::label('toastmaster_1', 'Toastmaster 1:') !!}
-        {!! Form::select('toastmaster_1', $users, old('toastmaster_1'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('toastmaster_1', $users, old('toastmaster_1'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <!-- Put the next two together-->
     <div class="form-group">
         {!! Form::label('table_topics_master', 'Table Topics Master:') !!}
-        {!! Form::select('table_topics_master', $users, old('table_topics_master'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('table_topics_master', $users, old('table_topics_master'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
@@ -95,7 +95,7 @@
 
     <div class="form-group">
         {!! Form::label('table_topics_winner', 'Table Topics Winner:') !!}
-        {!! Form::select('table_topics_winner', $users, old('table_topics_winner'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('table_topics_winner', $users, old('table_topics_winner'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <!-- Speeches including who evaluated, and title of Speech, and the order-->
@@ -146,7 +146,7 @@
     <h2>Second Half</h2>
     <div class="form-group">
         {!! Form::label('toastmaster_2', 'Toastmaster 2:') !!}
-        {!! Form::select('toastmaster_2', $users, old('toastmaster_2'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('toastmaster_2', $users, old('toastmaster_2'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <h3>Speeches</h3>
@@ -166,7 +166,6 @@
             <td>{!! Form::text('speech_title_4', old('speech_title_4'), ['class' => 'form-control']) !!}</td>
             <td>{!! Form::select('speech_evaluator_4', $users, old('speech_evaluator_4'), ['placeholder' => 'Pick a user']) !!}</td>
             <td>{!! Form::text('speech_time_4', old('speech_title_4'), ['class' => 'form-control speech-time']) !!}</td>
-            <td></td>
         </tr>
         <tr>
             <th scope="row">5</th>
@@ -174,8 +173,6 @@
             <td>{!! Form::text('speech_title_5', old('speech_title_5'), ['class' => 'form-control']) !!}</td>
             <td>{!! Form::select('speech_evaluator_5', $users, old('speech_evaluator_5'), ['placeholder' => 'Pick a user']) !!}</td>
             <td>{!! Form::text('speech_time_5', old('speech_time_5'), ['class' => 'form-control speech-time']) !!}</td>
-
-
         </tr>
         <tr>
             <th scope="row">6</th>
@@ -190,40 +187,40 @@
 
     <div class="form-group">
         {!! Form::label('ah_counter', 'Ah Counter:') !!}
-        {!! Form::select('ah_counter', $users, old('ah_counter'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('ah_counter', $users, old('ah_counter'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('timer', 'Timer:') !!}
-        {!! Form::select('timer', $users, old('timer'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('timer', $users, old('timer'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('most_ahs', 'Most Ahs:') !!}
-        {!! Form::select('most_ahs', $users, old('most_ahs'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('most_ahs', $users, old('most_ahs'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <!-- Multiple-->
     <div class="form-group">
         {!! Form::label('most_use_word', 'Most Use of the Word of the Day:') !!}
-        {!! Form::select('most_use_word', $users, old('most_use_word'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('most_use_word', $users, old('most_use_word'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
 
     </div>
 
     <!-- Multiple -->
     <div class="form-group">
         {!! Form::label('solved_riddle', 'Solved Riddle:') !!}
-        {!! Form::select('solved_riddle', $users, old('solved_riddle'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('solved_riddle', $users, old('solved_riddle'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('listening_post', 'Listening Post:') !!}
-        {!! Form::select('listening_post', $users, old('listening_post'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('listening_post', $users, old('listening_post'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('general_evaluator', 'General Evaluator:') !!}
-        {!! Form::select('general_evaluator', $users, old('general_evaluator'), ['placeholder' => 'Pick a user']) !!}
+        {!! Form::select('general_evaluator', $users, old('general_evaluator'), ['placeholder' => 'Pick a user', 'class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">

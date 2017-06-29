@@ -84,6 +84,8 @@
         <th>Attendance</th>
         <th>Speech</th>
         <th>Evaluation</th>
+        <th>Manuals</th>
+        <th>Competition</th>
         <th>Score</th>
         </thead>
         <tbody>
@@ -96,6 +98,8 @@
                     <td>{{ $userData[$user_id]['meetingsAttended']}}</td>
                     <td>{{ $userData[$user_id]['speechCount']}}</td>
                     <td>{{ $userData[$user_id]['speechEvaluations']}}</td>
+                    <td>{{ $userData[$user_id]['manualsCompleted']}}</td>
+                    <td>{{ $userData[$user_id]['enteredCompetition']}}</td>
                     <td>{{ $score }} </td>
                 </tr>
             @endif
