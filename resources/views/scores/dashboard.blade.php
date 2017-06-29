@@ -144,7 +144,7 @@
             },
 
             series: [{
-                name: 'Installation',
+                name: 'Toastmaster',
                 data: [ {{ implode(",", $meetingData) }} ]
             }]
 
