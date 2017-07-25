@@ -65,7 +65,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-12 fact">
-                            <div class="huge">{{ round(array_sum($meetingData) / count($meetingData), 2) }}</div>
+                            <div class="huge">{{ count($meetingData) > 0 ? round(array_sum($meetingData) / count($meetingData), 2) : 0 }}</div>
                             <div>Average Attendance</div>
                         </div>
                     </div>
