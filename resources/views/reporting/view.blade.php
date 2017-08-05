@@ -90,4 +90,4 @@
         $("#reportStartDate").datepicker("update", '{{ $start_date }}');
         $("#reportEndDate").datepicker("update", '{{ $end_date }}');
     </script>
-@stop
+@append
